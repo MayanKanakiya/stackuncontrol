@@ -1,0 +1,128 @@
+/*
+    Created on : Nov 4, 2022, 10:56:20 AM
+    Author     : Dell
+*/
+@media only screen and (max-width: 992px) {
+    #contactImgRemove{
+        display: none;
+    }
+    .empowerTeamCoontainer .container .row{
+        flex-direction: column !important;
+    }
+    .empowerTeamCoontainer .container .row .col-9{
+        width:100% !important;
+        text-align: center !important;
+    }
+    .empowerTeamCoontainer .container .row .col-3{
+        margin-top: 20px !important;
+        width:100% !important;
+        text-align: center !important;
+    }
+    .carouselPreviousBtnd-none{
+        display: none;
+    }
+    .carouselNextBtnd-none{
+        display: none;
+    }
+}
+@media only screen and (max-width: 575px) {
+    .signin-m-left-right{
+        width: 96% !important;
+    }
+    .signup-m-left-right{
+        width: 96% !important;
+    }
+    .contact-m-left-right{
+        width: 96% !important;
+    }
+    .userProfile-m-left-right{
+        width: 96% !important;
+    }
+}
+@media only screen and (max-width: 525px) {
+    .userProfileMobile{
+        flex-direction: column;
+    }
+    .userProfileLogoutBtn{
+        margin-left: 0px !important;
+        margin-top: 5px !important;
+    }
+    .userProfileUname{
+        text-align: center !important;
+    }
+}
+@media only screen and (max-width: 408px) {
+    .carousel-inner{
+        height:491px;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .owl-carousel .owl-item img{
+        width: 180% !important;
+    }
+    .carousel-inner{
+        height: 415px !important;
+    }
+}
+@media only screen and (max-width: 575px) {
+    .owl-carousel .owl-item img{
+        width: 35% !important;
+    }
+    .owl-carousel .single-logo .item a{
+        display: flex !important;
+        justify-content: center !important;
+        align-content: center !important;
+    }
+}
+/*testimonial carousel silder start*/
+@media only screen and (max-width: 1200px) {
+    .carousel-inner{
+        height: 435px !important;
+    }
+}
+@media only screen and (max-width: 516px) {
+    .carousel-inner{
+        height: 459px !important;
+    }
+}
+@media only screen and (max-width: 439px) {
+    .carousel-inner{
+        height: 490px !important;
+    }
+}
+@media only screen and (max-width: 406px) {
+    .carousel-inner{
+        height: 506px !important;
+    }
+}
+@media only screen and (max-width: 375px) {
+    .carousel-inner{
+        height: 530px !important;
+    }
+}
+@media only screen and (max-width: 345px) {
+    .carousel-inner{
+        height: 554px !important;
+    }
+}
+@media only screen and (max-width: 325px) {
+    .carousel-inner{
+        height: 581px !important;
+    }
+}
+/*testimonial carousel silder end*/
+
+/*counter cards css start*/
+@media only screen and (max-width: 1400px) {
+    .counterCards{
+        margin-top: 30px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .counterCards{
+        display: flex;
+        justify-content: center;
+    }
+}
+/*counter cards css end*/
+
