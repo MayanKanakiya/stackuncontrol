@@ -2,7 +2,7 @@ package com.stackuncontrol.servlet;
 
 import com.stackuncontrol.db.UserDB;
 import com.stackuncontrol.entities.Message;
-import com.stackuncontrol.entities.UserSignin;
+import com.stackuncontrol.entities.User;
 import com.stackuncontrol.helper.dbconnection.DBConnection;
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,9 +21,9 @@ public class signinServlet extends HttpServlet {
         String email = req.getParameter("email");
         String pass = req.getParameter("pass");
 
-        UserDB obj = new UserDB(DBConnection.isConnection());
-        UserSignin userSignin = new UserSignin(email, pass);
-
+        UserDB userDB = new UserDB(DBConnection.isConnection());
+        User user = userDB.signinUser(email, pass);
+        
         Connection conObj = DBConnection.isConnection();
         Message msgObj;
 
@@ -31,10 +31,9 @@ public class signinServlet extends HttpServlet {
         HttpSession userActive = req.getSession();
 
         if (conObj != null) {
-            if (!obj.signinUser(userSignin).equals("")) {
+            if (user != null) {
                 res.sendRedirect("questions.jsp");
-                userActive.setAttribute("userActive", obj.signinUser(userSignin));
-
+                userActive.setAttribute("userActive", user);
             } else {
                 msgObj = new Message("Check your email or password", "Error:", "alert-danger", "fa fa-exclamation-triangle");
                 signinSession.setAttribute("signinMsg", msgObj);

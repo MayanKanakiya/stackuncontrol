@@ -3,7 +3,7 @@
     Created on : Nov 8, 2022, 9:46:33 AM
     Author     : Dell
 --%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="com.stackuncontrol.entities.Message"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,13 +22,10 @@
     </head>
     <body style="background-color: rgb(203 226 255 / 16%);">
         <%@ include file="navbar_footer/navbar.jsp" %>
-        <%--<jsp:forward page="fetchUDataServlet" />--%>
-
         <%
-
-        if(userActive==null){
+        if(user==null){
             response.sendRedirect("questions.jsp");
-        }
+        }else{
         %>
         <div class="container userProfile-m-left-right my-5 shadow-lg p-3 mb-5" style='border-radius: 25px;background-color: white;'>
             <!--userProfile header part start-->
@@ -37,8 +34,8 @@
                     <img src="mediaFiles/user.png" alt="user image not found" width="128" height="128" class="rounded-circle me-2">
                 </div>
                 <div class="userProfileUname">
-                    <h1 class="mb-0"><%= userActive%></h1>
-                    <span class="mt-1">None</span>
+                    <h1 class="mb-0"><%= user.getUname() %></h1>
+                    <span class="mt-1"><%= user.getEmail() %></span>
                 </div>
                 <div class="ms-auto userProfileLogoutBtn">
                     <a class="btn btn-primary btnAnimation" href="logout.jsp">LOGOUT</a>
@@ -60,18 +57,32 @@
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
                     <!--userProfile main form - 1 start-->
                     <h1>Edit your profile:</h1>
-                    <form id="userProfileForm-1" method="GET" action="fetchUDataServlet">
+                    <!--alert message code - start here-->
+                    <%
+                     Message msgObj = (Message) session.getAttribute("editProfilMsg");
+                     if (msgObj != null) {
+                    %>
+                    <div class="alert <%= msgObj.getCls()%> alert-dismissible fade show" role="alert">
+                        <strong><i class="<%= msgObj.getSign()%> ms-0 me-2" aria-hidden="true"></i><%= msgObj.getType()%></strong> <%= msgObj.getContent()%>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <%
+                            session.removeAttribute("editProfilMsg");
+                        }
+                    %>
+                    <!--alert message code - end here-->
+                    <form id="userProfileForm-1" method="POST" action="editProfileServlet">
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <label for="dname" class="form-label">Display Name:</label>
-                                <input type="text" class="form-control" id="dname" placeholder="Display Name">
+                                <input type="text" class="form-control" id="uname" name="uname" placeholder="Display Name" value="<%= user.getUname() %>">
                             </div>
                             <div class="col-md-12">
                                 <label for="aboutme" class="form-label">About Me:</label>
-                                <textarea class="form-control" id="aboutme" placeholder="Write about yourself" style="height: 150px"></textarea>
+                                <textarea class="form-control" id="aboutme" name="aboutme" placeholder="Write about yourself" style="height: 150px"><%=user.getAboutme() %></textarea>
                             </div>
                             <div class="d-grid gap-2 mb-2">
-                                <button class="btn btn-primary" type="submit" id="saveProfile" disabled="disabled">SAVE PROFILE</button>
+                                <button class="btn btn-primary" type="submit" id="saveProfileBtn" disabled="disabled">SAVE PROFILE</button>
                             </div>
                         </div>
                     </form>
@@ -135,8 +146,11 @@
                 </div>
             </div>
         </div>
+        <%
+                                }%>
         <!--userProfile activity and edit profile section end-->
         <%@ include file="navbar_footer/footer.html" %>
         <script src="js/bootJs.js" defer type="text/javascript"></script>
+        <script src="js/editProfile.js" type="text/javascript"></script>
     </body>
 </html>

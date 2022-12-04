@@ -1,4 +1,4 @@
-
+<%@page import="com.stackuncontrol.entities.User"%>
 <!--Navbar Start-->
 <nav class="navbar navbar-expand-lg navbar-light bg-white" id="mainNavbar">
     <div class="container">
@@ -31,8 +31,8 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item me-1">
                         <%
-                            String userActive=(String)session.getAttribute("userActive");
-                            if(userActive==null){
+                            User user=(User)session.getAttribute("userActive");
+                            if(user==null){
                         %>
 
                         <a href="signin.jsp" class="btn btn-primary btnAnimation"><i class="fa fa-sign-in me-1" aria-hidden="true"></i>Sign in</a>
@@ -46,7 +46,7 @@
                     <li class="nav-item dropdown removeDropdownIconInUserActive">
                         <a class="nav-link dropdown-toggle me-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="mediaFiles/user.png" alt="user image not ofund" width="32" height="32" class="rounded-circle">
-                            <span class="text-dark"><%= userActive %></span>
+                            <span class="text-dark"><%= user.getUname() %></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="userProfile.jsp">Edit Profile</a></li>
@@ -89,7 +89,7 @@
             <span class="nav-link"><a class="mainMenuLink" aria-current="page" href="contact.jsp"><i class="fa fa-envelope me-1" aria-hidden="true"></i>Contact us</a></span>
         </li>
         <%
-            if(userActive==null){
+            if(user==null){
         %>
         <li class="nav-item">
             <div class="d-grid col-12 ps-3 pe-3 py-2">
@@ -111,13 +111,13 @@
         </li>
     </ul>
     <%
-        if(userActive!=null){
+        if(user!=null){
     %>
     <hr>
     <div class="dropdown removeDropdownIconInUserActive">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="mediaFiles/user.png" alt="user image not ofund" width="32" height="32" class="rounded-circle me-2">
-            <strong><%= userActive %></strong>
+            <strong><%= user.getUname() %></strong>
         </a>
         <ul class="dropdown-menu text-small shadow">
             <li><a class="dropdown-item" href="userProfile.jsp">Edit Profile</a></li>

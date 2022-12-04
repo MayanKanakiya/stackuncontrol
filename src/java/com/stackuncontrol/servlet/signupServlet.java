@@ -2,7 +2,7 @@ package com.stackuncontrol.servlet;
 
 import com.stackuncontrol.db.UserDB;
 import com.stackuncontrol.entities.Message;
-import com.stackuncontrol.entities.UserSignup;
+import com.stackuncontrol.entities.User;
 import com.stackuncontrol.helper.dbconnection.DBConnection;
 import java.io.IOException;
 import java.sql.Connection;
@@ -23,7 +23,7 @@ public class signupServlet extends HttpServlet {
         String signup_re_pass = req.getParameter("re-pass");
 
         UserDB obj = new UserDB(DBConnection.isConnection());
-        UserSignup userSignup = new UserSignup(signup_uname, signup_email, signup_pass, signup_re_pass);
+        User userSignup = new User(signup_uname, signup_email, signup_pass, signup_re_pass);
 
         Connection conObj = DBConnection.isConnection();
         Message msgObj;

@@ -1,15 +1,11 @@
 package com.stackuncontrol.db;
 
-import com.stackuncontrol.entities.FetchUData;
-import java.sql.PreparedStatement;
-import java.sql.Connection;
+import com.stackuncontrol.entities.User;
 import com.stackuncontrol.entities.UserContact;
-import com.stackuncontrol.entities.UserSignin;
-import com.stackuncontrol.entities.UserSignup;
-import com.stackuncontrol.helper.dbconnection.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class UserDB {
 
@@ -40,10 +36,10 @@ public class UserDB {
 //    Method for insert UserContact details into UserContact database - end here
 
 //    Method for prevent duplicate username - start code here
-    public boolean checkUname(UserSignup userSignup) {
+    public boolean checkUname(User user) {
         boolean f = false;
         try {
-            String selectQuery = "select * from signup where username='" + userSignup.getUname() + "'";
+            String selectQuery = "select * from signup where username='" + user.getUname() + "'";
             pst = con.prepareStatement(selectQuery);
             rs = pst.executeQuery();
             if (rs.next()) {
@@ -57,10 +53,10 @@ public class UserDB {
 //    Method for prevent duplicate username - end code here
 
 //    Method for prevent duplicate email - start code here
-    public boolean checkEmail(UserSignup userSignup) {
+    public boolean checkEmail(User user) {
         boolean f = false;
         try {
-            String selectQuery = "select * from signup where email='" + userSignup.getEmail() + "'";
+            String selectQuery = "select * from signup where email='" + user.getEmail() + "'";
             pst = con.prepareStatement(selectQuery);
             rs = pst.executeQuery();
             if (rs.next()) {
@@ -74,14 +70,14 @@ public class UserDB {
 //    Method for prevent duplicate email - end code here
 
 //    Method for user signup - start here
-    public String signupUser(UserSignup userSignup) {
+    public String signupUser(User user) {
         String f = "";
         try {
             if (con != null) {
-                if (checkUname(userSignup) != true && !userSignup.getUname().equals("admin") && !userSignup.getUname().equals("Admin")) {
-                    if (checkEmail(userSignup) != true) {
-                        if (userSignup.getPass().equals(userSignup.getRe_pass())) {
-                            String insertQuery = "insert into signup(username,email,pass) values('" + userSignup.getUname() + "','" + userSignup.getEmail() + "','" + userSignup.getPass() + "');";
+                if (checkUname(user) != true && !user.getUname().equals("admin") && !user.getUname().equals("Admin")) {
+                    if (checkEmail(user) != true) {
+                        if (user.getPass().equals(user.getRe_pass())) {
+                            String insertQuery = "insert into signup(username,email,pass) values('" + user.getUname() + "','" + user.getEmail() + "','" + user.getPass() + "');";
                             pst = con.prepareStatement(insertQuery);
                             pst.executeUpdate();
                         } else {
@@ -102,38 +98,42 @@ public class UserDB {
 //    Method for user signup - end here
 
 //    Method for user signin - start here
-    public String signinUser(UserSignin userSignin) {
-        String f = "";
+    public User signinUser(String email, String password) {
+        User user = null;
         try {
-            String selectQuery = "select username from signup where email='" + userSignin.getEmail() + "' and pass=" + userSignin.getPass() + ";";
+            String selectQuery = "select * from signup where email='" + email + "' and pass=" + password + ";";
             pst = con.prepareStatement(selectQuery);
             rs = pst.executeQuery();
             if (rs.next()) {
-                f = rs.getString("username");
+                user = new User();
+                user.setUname(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setAboutme(rs.getString("aboutme"));
+
             }
         } catch (Exception e) {
             System.out.println(e + " Error while user signin");
         }
-        return f;
+        return user;
     }
 //    Method for user signin - end here
 
-//    Method for fetching the user data - start here
-    public FetchUData fetchUser(String uname) {
-        FetchUData fetchUData = new FetchUData();
+//    Method for update the user profile - start here
+    public boolean editProfile(User user) {
+        boolean f = false;
         try {
-            String selectQuery = "select * from signup where username='" + uname + "'";
-            pst = con.prepareStatement(selectQuery);
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                fetchUData.setUname(rs.getString("username"));
-                fetchUData.setEmail(rs.getString("email"));
-                fetchUData.setAboutme(rs.getString("aboutme"));
+            if (con != null) {
+                String updateQuery = "update signup set username='" + user.getUname() + "',aboutme='" + user.getAboutme() + "' where email='" + user.getEmail()+ "';";
+                pst = con.prepareStatement(updateQuery);
+                pst.executeUpdate();
+                f=true;
+            } else {
+                f = false;
             }
         } catch (Exception e) {
-            System.out.println(e + " Error while fetching user data");
+            System.out.println(e + " Error while update user profile");
         }
-        return fetchUData;
-//    Method for fetching the user data - end here
+        return f;
     }
+//    Method for update the user profile - end here
 }

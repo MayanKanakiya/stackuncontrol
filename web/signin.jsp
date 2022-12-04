@@ -27,7 +27,7 @@
     <body style="background-color: rgb(203 226 255 / 16%);">
         <%@ include file="navbar_footer/navbar.jsp" %>
         <!--login form start-->
-        <div class="container signin-m-left-right">
+        <div class="container signin-m-left-right" >
             <div class="row justify-content-center align-items-center my-5 mb-0">
                 <div class="col-md-4 shadow-lg p-3 mb-1 bg-body" style="border-radius: 20px">
                     <h1 class="text-center text-secondary"><i class="fa fa-user me-2" aria-hidden="true"></i>Sign in</h1>
@@ -35,7 +35,7 @@
                     <%
                          Message msgObj = (Message) session.getAttribute("signinMsg");
                           if (msgObj != null) {
-                    %>
+                   %>
                     <!--alert code start here-->
                     <div class="alert <%= msgObj.getCls()%> alert-dismissible fade show" role="alert">
                         <strong><i class="<%= msgObj.getSign()%> ms-0 me-2" aria-hidden="true"></i></strong> <%= msgObj.getContent()%>

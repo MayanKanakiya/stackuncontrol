@@ -1,6 +1,5 @@
 package com.stackuncontrol.servlet;
 
-import com.mysql.cj.Session;
 import com.stackuncontrol.db.UserDB;
 import com.stackuncontrol.entities.Message;
 import com.stackuncontrol.entities.UserContact;
