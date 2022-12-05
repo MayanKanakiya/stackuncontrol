@@ -49,23 +49,28 @@
 
         <!--Ask question : title container start-->
         <div class="container">
-            <form id="askQuestionMainForm">
+            <form id="askQuestionMainForm" action="askQuestionServlet" method="POST">
                 <label for="title" class="form-label mb-0">Title</label>
                 <div class="form-text my-0">Be specific and imagine you’re asking a question to another person. Minimum 20 characters.</div>
-                <input type="text" class="form-control mb-3" id="title" placeholder="Enter title here">
+                <input type="text" class="form-control mb-3" id="title" name="title" placeholder="Enter title here">
                 <!--Ask question : title container end-->
 
                 <!--Ask question : ask question container start-->
                 <label for="editor-example-1" class="form-label mb-0">What are the details of your problem?</label>
                 <div class="form-text my-0">Introduce the problem and expand on what you put in the title. Minimum 20 characters.</div>
                 <div id="editor-example-1" class="mb-3"></div>
+                <div id="preview1"></div>
+                <input type="hidden" class="form-control mb-3 text-dark" name="txt1" id="txt1">
                 <!--Ask question : ask question container end-->
 
                 <!--Ask question : ask question excepted container start-->
                 <label for="editor-example-2" class="form-label mb-0">What did you try and what were you expecting?</label>
                 <div class="form-text my-0">Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters.</div>
                 <div id="editor-example-2" class="mb-4"></div>
-                <button type="submit" id="questionBtn" disabled="disabled" class="btn btn-primary mb-4">Submit</button>
+                <div id="preview2"></div>
+                <input type="hidden" class="form-control mb-3 text-dark" name="txt2" id="txt2">
+                             
+                <button type="submit" onclick="parseHTML()" id="questionBtn" disabled="disabled" class="btn btn-primary mb-4">Submit</button>
             </form>
         </div>
         <!--Ask question : ask question excepted container end-->

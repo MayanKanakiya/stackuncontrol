@@ -79,7 +79,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="aboutme" class="form-label">About Me:</label>
-                                <textarea class="form-control" id="aboutme" name="aboutme" placeholder="Write about yourself" style="height: 150px"><%=user.getAboutme() %></textarea>
+                                <textarea class="form-control" id="aboutme" name="aboutme" placeholder="Write about yourself" style="height: 150px"><%=(user.getAboutme().equals("Tell us about yourself")) ? "" : user.getAboutme() %></textarea>
                             </div>
                             <div class="d-grid gap-2 mb-2">
                                 <button class="btn btn-primary" type="submit" id="saveProfileBtn" disabled="disabled">SAVE PROFILE</button>

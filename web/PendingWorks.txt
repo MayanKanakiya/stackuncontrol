@@ -1,0 +1,2 @@
+1. Add id when user login. Id help in who ask the question
+2. Not allowed ask question page unless user not login

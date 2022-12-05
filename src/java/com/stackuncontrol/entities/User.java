@@ -2,6 +2,7 @@ package com.stackuncontrol.entities;
 
 public class User {
 
+    private String id;
     private String uname;
     private String email;
     private String pass;
@@ -16,13 +17,6 @@ public class User {
         this.email = email;
         this.pass = pass;
         this.re_pass = re_pass;
-    }
-    public User(String uname, String email, String pass, String re_pass,String aboutme) {
-        this.uname = uname;
-        this.email = email;
-        this.pass = pass;
-        this.re_pass = re_pass;
-        this.aboutme = aboutme;
     }
 
     public String getUname() {
@@ -53,6 +47,14 @@ public class User {
         this.pass = pass;
     }
 
+    public String getId() {
+        return id;
+    }
+    
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public void setRe_pass(String re_pass) {
         this.re_pass = re_pass;
     }
