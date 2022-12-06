@@ -109,8 +109,7 @@ public class UserDB {
                 user.setUname(rs.getString("username"));
                 user.setEmail(rs.getString("email"));
                 user.setAboutme(rs.getString("aboutme"));
-                user.setId(Integer.toString(rs.getInt("id")));
-
+                user.setId(Integer.toString(rs.getInt("userid")));
             }
         } catch (Exception e) {
             System.out.println(e + " Error while user signin");

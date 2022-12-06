@@ -22,10 +22,10 @@ public class signupServlet extends HttpServlet {
         String signup_pass = req.getParameter("pass");
         String signup_re_pass = req.getParameter("re-pass");
 
-        UserDB obj = new UserDB(DBConnection.isConnection());
+        Connection conObj = DBConnection.isConnection();
+        UserDB obj = new UserDB(conObj);
         User userSignup = new User(signup_uname, signup_email, signup_pass, signup_re_pass);
 
-        Connection conObj = DBConnection.isConnection();
         Message msgObj;
         HttpSession signupSession = req.getSession();
 

@@ -3,7 +3,7 @@
     Created on : Nov 17, 2022, 10:01:20 AM
     Author     : Dell
 --%>
-
+<%@page import="com.stackuncontrol.entities.Message"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -26,6 +26,19 @@
     </head>
     <body>
         <%@ include file="navbar_footer/navbar.jsp" %>
+        <%
+        if(user==null){
+        %>
+        <div class="container my-5 mb-5">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading fw-bold my-4">You must be logged in to ask a question on Stack Uncontrol</h4>
+                <p><a href="signin.jsp" style="text-decoration: none;">Sign in</a> or <a href="signup.jsp" style="text-decoration: none;">Sign up</a></p>
+            </div>
+        </div>
+        <%
+        }else{
+            
+        %>
         <div class="container my-4 mb-4">
             <h1 class="mb-3">Ask a public question</h1>
             <!--Ask question alert container start-->
@@ -49,6 +62,22 @@
 
         <!--Ask question : title container start-->
         <div class="container">
+            <!--alert message code start here-->
+            <%
+                         Message msgObj = (Message) session.getAttribute("askQueMsg");
+                          if (msgObj != null) {
+                   %>
+                    <!--alert code start here-->
+                    <div class="alert <%= msgObj.getCls()%> alert-dismissible fade show" role="alert">
+                        <strong><i class="<%= msgObj.getSign()%> ms-0 me-2" aria-hidden="true"></i></strong> <%= msgObj.getContent()%>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <%
+                        session.removeAttribute("askQueMsg");
+                        }
+                    %>
+                    <!--alert code end here-->
+            <!--alert message code end here-->
             <form id="askQuestionMainForm" action="askQuestionServlet" method="POST">
                 <label for="title" class="form-label mb-0">Title</label>
                 <div class="form-text my-0">Be specific and imagine you’re asking a question to another person. Minimum 20 characters.</div>
@@ -59,21 +88,24 @@
                 <label for="editor-example-1" class="form-label mb-0">What are the details of your problem?</label>
                 <div class="form-text my-0">Introduce the problem and expand on what you put in the title. Minimum 20 characters.</div>
                 <div id="editor-example-1" class="mb-3"></div>
-                <div id="preview1"></div>
-                <input type="hidden" class="form-control mb-3 text-dark" name="txt1" id="txt1">
+                <div id="preview1" class="d-none"></div>
+                <input type="hidden" class="form-control mb-3 text-dark" name="detailsTxt" id="txt1">
                 <!--Ask question : ask question container end-->
 
                 <!--Ask question : ask question excepted container start-->
                 <label for="editor-example-2" class="form-label mb-0">What did you try and what were you expecting?</label>
                 <div class="form-text my-0">Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters.</div>
                 <div id="editor-example-2" class="mb-4"></div>
-                <div id="preview2"></div>
-                <input type="hidden" class="form-control mb-3 text-dark" name="txt2" id="txt2">
-                             
+                <div id="preview2" class="d-none"></div>
+                <input type="hidden" class="form-control mb-3 text-dark" name="exceptTxt" id="txt2">
+                <!--Ask question : ask question excepted container end-->
+
                 <button type="submit" onclick="parseHTML()" id="questionBtn" disabled="disabled" class="btn btn-primary mb-4">Submit</button>
             </form>
         </div>
-        <!--Ask question : ask question excepted container end-->
+        <%
+            }
+        %>
         <%@ include file="navbar_footer/footer.html" %>
         <script src="node_modules/@stackoverflow/stacks-editor/dist/app.bundle.js"></script>
         <script src="js/stacks.min.js" type="text/javascript"></script>

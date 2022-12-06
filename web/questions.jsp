@@ -23,6 +23,12 @@
     <body>
         <%@ include file="navbar_footer/navbar.jsp" %>
         <!--tags, questions and search bar section start-->
+        <%
+            askQuestion fetchedQue=(askQuestion)session.getAttribute("questionsFetched");
+            if(fetchedQue==null){
+               out.println("Something went wrong");
+            }else{
+        %>
         <div class="container">
             <div class="navbar bg-whitw">
                 <div class="container-fluid">
@@ -89,32 +95,11 @@
                 </div>
             </div>
             <!--question-1 end-->
-            <!--question-2 start-->
-            <div class="row mb-3">
-                <div class="col-12">
-                    <div class="d-flex align-items-center">
-                        <!--answer counter start-->
-                        <div class="flex-shrink-0">
-                            <p class="mb-0 bg-light">1 answer</p>
-                        </div>
-                        <!--answer counter end-->
-                        <div class="flex-grow-1 ms-3">
-                            <a href="#" class="fw-bold fs-4 mb-1 questionLink">How to use promise in javascript?</a>
-                            <p class="fw-light fs-6">JavaScript, often abbreviated as JS, is a programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS. As of 2022, 98% of websites use JavaScript on the client side for webpage behavior, often incorporating third-party libraries</p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-12">
-                    <div class="d-flex flex-row-reverse align-items-center">
-                        <p class="mb-0 me-5">Rohan <span>, asked 10/11/2022 at 9:20PM</span></p>
-                        <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2">
-                    </div>
-                </div>
-            </div>
-            <!--question-2 end-->
         </div>
         <!--Questions section end-->
+        <%
+            }
+        %>
         <%@ include file="navbar_footer/footer.html" %>
 
         <!--boostrap script start here-->
