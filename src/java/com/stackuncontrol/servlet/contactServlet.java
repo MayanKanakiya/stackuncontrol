@@ -46,5 +46,4 @@ public class contactServlet extends HttpServlet {
             res.sendRedirect("contact.jsp");
         }
     }
-
 }

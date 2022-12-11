@@ -5,6 +5,7 @@ public class askQuestion {
     private String detailsque;
     private String exceptque;
     private int userid;
+    private String uname;
     private String time;
 
     public askQuestion() {
@@ -15,6 +16,15 @@ public class askQuestion {
         this.detailsque = detailsque;
         this.exceptque = exceptque;
         this.userid = userid;
+    }
+
+    public askQuestion(int queid, String title, String detailsque, int userid, String uname, String time) {
+        this.queid = queid;
+        this.title = title;
+        this.detailsque = detailsque;
+        this.userid = userid;
+        this.uname = uname;
+        this.time = time;
     }
 
     public void setTime(String time) {
@@ -47,6 +57,14 @@ public class askQuestion {
 
     public int getQueid() {
         return queid;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 
     public String getTitle() {

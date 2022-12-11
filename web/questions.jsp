@@ -3,7 +3,10 @@
     Created on : Nov 15, 2022, 8:54:01 AM
     Author     : Dell
 --%>
-
+<%@page import="com.stackuncontrol.entities.askQuestion"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.stackuncontrol.helper.dbconnection.DBConnection"%>
+<%@page import="com.stackuncontrol.db.askQuestionDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,28 +21,22 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="css/styles_utility.css" rel="stylesheet" type="text/css"/>
         <link href="css/mediaQuery.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <%@ include file="navbar_footer/navbar.jsp" %>
-        <!--tags, questions and search bar section start-->
         <%
-            askQuestion fetchedQue=(askQuestion)session.getAttribute("questionsFetched");
-            if(fetchedQue==null){
-               out.println("Something went wrong");
-            }else{
+       int countNum=0;
         %>
-        <div class="container">
-            <div class="navbar bg-whitw">
+        <!--tags, questions and search bar section start-->
+        <div class="container"> 
+            <div class="navbar bg-white">
                 <div class="container-fluid">
                     <div class="navbar-brand">
                         <a class="btn btn-primary btnAnimation" href="tags.jsp">Tags</a>
                         <a class="btn btn-primary btnAnimation" href="askQuestions.jsp">Ask Question</a>
                     </div>
-                    <form class="form">
-                        <i class="fa fa-search"></i>
-                        <input type="search" class="form-control form-input" placeholder="Search..">
-                    </form>
                 </div>
             </div>
         </div>
@@ -47,62 +44,85 @@
 
         <!--filter and total question text start-->
         <div class="container">
-            <div class="navbar bg-whitw">
+            <div class="navbar bg-white">
                 <div class="container-fluid">
                     <div>
-                        <p class="mb-0">1000 Questions</p>
-                    </div>
-
-                    <div class="navbar-brand dropstart">
-                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Number of rows</button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">25</a></li>
-                            <li><a class="dropdown-item" href="#">75</a></li>
-                            <li><a class="dropdown-item" href="#">100</a></li>
-                            <li><a class="dropdown-item" href="#">Show all</a></li>
-                        </ul>
-                        <button class="btn btn-outline-primary btn-sm" type="button">Newest</button>
-                        <button class="btn btn-outline-primary btn-sm" type="button">Unanswered</button>
+                        <p class="mb-0" id="countNum">0 Questions</p>
                     </div>
                 </div>
             </div>
             <hr>
         </div>
+        <%
+            askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
+            ArrayList<askQuestion> list1 =  dao.fetchQuestion();
+        %>
         <!--filter and total question text end-->
         <!--Questions section start-->
-        <div class="container">
-            <!--question-1 start-->
-            <div class="row mb-0 mb-3">
-                <div class="col-12">
-                    <div class="d-flex align-items-center">
-                        <!--answer counter start-->
-                        <div class="flex-shrink-0">
-                            <p class="mb-0 bg-light">1 answer</p>
-                        </div>
-                        <!--answer counter end-->
-                        <div class="flex-grow-1 ms-3">
-                            <a href="#" class="fw-bold fs-4 mb-1 questionLink">How can I validate an email address in JavaScript?</a>
-                            <p class="fw-light fs-6">JavaScript, often abbreviated as JS, is a programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS. As of 2022, 98% of websites use JavaScript on the client side for webpage behavior, often incorporating third-party libraries</p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-12">
-                    <div class="d-flex flex-row-reverse align-items-center">
-                        <p class="mb-0 me-5">Mayank <span>, asked 17/11/2022 at 9:25PM</span></p>
-                        <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2">
-                    </div>
-                </div>
-            </div>
-            <!--question-1 end-->
+        <div class="container my-5">
+            <table class="table" id="example">
+                <thead style="display: none;">
+                    <tr>
+                        <th scope="col">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                               for(askQuestion aQuestion : list1){
+                               countNum++;
+                    %>
+                    <tr>
+                        <td>
+                            <div class="container">
+                                <script>
+                                    document.getElementById('countNum').innerHTML =<%= countNum-1 %> + " Questions";
+                                </script>
+                                <%
+                                if(aQuestion.getTitle()==null && aQuestion.getDetailsque()==null)
+                                {
+                                    break;
+                                }
+                                %>
+                                <div class="row mb-0 mb-3">
+                                    <div class="col-12">
+                                        <div class="d-flex align-items-center">
+                                            <!--answer counter start-->
+                                            <div class="flex-shrink-0">
+                                                <p class="mb-0 bg-light">1 answer</p>
+                                            </div>
+                                            <!--answer counter end-->
+                                            <div class="flex-grow-1 ms-3">
+                                                <a href="#" class="fw-bold fs-4 mb-1 questionLink"><%= aQuestion.getTitle() %></a>
+                                                <%= aQuestion.getDetailsque() %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-flex flex-row-reverse align-items-center">
+                                            <p class="mb-0 me-5"><%= aQuestion.getUname() %><span>, asked <%= aQuestion.getTime()  %></span></p>
+                                            <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <%
+                                    }
+                                %>
+                                <!--question-1 end-->
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <!--Questions section end-->
-        <%
-            }
-        %>
         <%@ include file="navbar_footer/footer.html" %>
-
         <!--boostrap script start here-->
         <script src="js/bootJs.js" defer type="text/javascript"></script>
+        <script src="js/jquery.dataTables.js" type="text/javascript"></script>
+        <script>
+                                    $(document).ready(function () {
+                                        $('#example').DataTable();
+                                    });
+        </script>
     </body>
 </html>

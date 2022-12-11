@@ -106,7 +106,7 @@
         %>
         <li class="nav-item">
             <div class="d-grid col-12 ps-3 pe-3 py-2">
-                <a class="btn btn-primary btnAnimation" href="questions.jsp"><i class="fa fa-question-circle me-1" aria-hidden="true"></i>Ask Question</a>
+                <a class="btn btn-primary btnAnimation" href="questions.jsp"><i class="fa fa-question-circle me-1" aria-hidden="true"></i>question</a>
             </div>
         </li>
     </ul>

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class askQuestionServlet extends HttpServlet {
-
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         res.setContentType("text/html;charset=UTF-8");
@@ -28,18 +27,14 @@ public class askQuestionServlet extends HttpServlet {
 
             Connection conObj = DBConnection.isConnection();
             askQuestionDao dao = new askQuestionDao(conObj);
-            askQuestion fetchAllQuestions = dao.fetchQuestion();
             askQuestion aQuestion = new askQuestion(title, detailsTxt, exceptTxt, Integer.parseInt(uid.getId()));
 
             Message msgObj;
             HttpSession askQueMsgSes = req.getSession();
-            HttpSession fetchQueMsgSes = req.getSession();
-
+            
             if (conObj != null) {
-                if (dao.askQuestion(aQuestion) == true && fetchAllQuestions != null) {
+                if (dao.askQuestion(aQuestion) == true) {
                     res.sendRedirect("questions.jsp");
-                    fetchQueMsgSes.setAttribute("questionsFetched", fetchAllQuestions);
-                    
                 } else {
                     msgObj = new Message("Your question not add.", "Error:", "alert-danger", "fa fa-exclamation-triangle");
                     askQueMsgSes.setAttribute("askQueMsg", msgObj);
@@ -54,5 +49,4 @@ public class askQuestionServlet extends HttpServlet {
             System.err.println(e);
         }
     }
-
 }

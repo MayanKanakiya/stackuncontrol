@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class askQuestionDao {
 
@@ -16,12 +17,13 @@ public class askQuestionDao {
     public askQuestionDao(Connection con) {
         this.con = con;
     }
+
     //Method for insert askQuestion inF database - start here
     public boolean askQuestion(askQuestion aQuestion) {
         boolean f = false;
         try {
             if (con != null) {
-                String insertQuery = "insert into askquestion(title,detailsque,exceptque,userid) values('"+aQuestion.getTitle()+"','"+aQuestion.getDetailsque()+"','"+aQuestion.getExceptque()+"','"+aQuestion.getUserid()+"');";
+                String insertQuery = "insert into askquestion(title,detailsque,exceptque,userid) values('" + aQuestion.getTitle() + "','" + aQuestion.getDetailsque() + "','" + aQuestion.getExceptque() + "'," + aQuestion.getUserid() + ");";
                 pst = con.prepareStatement(insertQuery);
                 pst.executeUpdate();
                 f = true;
@@ -32,28 +34,30 @@ public class askQuestionDao {
         return f;
     }
     //Method for insert askQuestion in database - end here
-    
+
 //    Method for fetch question into questions.jsp page - start here
-    public askQuestion fetchQuestion(){
-        askQuestion aQuestion=null;
+    public ArrayList<askQuestion> fetchQuestion() {
+        ArrayList<askQuestion> list = new ArrayList<>();
         try {
-             String selectQuery = "select * from askquestion";
+//            String selectQuery = "SELECT signup.userid,signup.username,askquestion.queid,askquestion.title,askquestion.detailsque,askquestion.time FROM signup LEFT JOIN askquestion ON signup.userid = askquestion.queid LIMIT 1;";
+            String selectQuery = "SELECT  signup.userid,signup.username, askquestion.queid,askquestion.title,askquestion.detailsque,askquestion.time FROM signup LEFT JOIN askquestion ON signup.userid = askquestion.userid;";
             pst = con.prepareStatement(selectQuery);
             rs = pst.executeQuery();
-            if (rs.next()) {
-                aQuestion = new askQuestion();
-                aQuestion.setQueid(rs.getInt("queid"));
-                aQuestion.setTitle(rs.getString("title"));
-                aQuestion.setDetailsque(rs.getString("detailsque"));
-                aQuestion.setExceptque(rs.getString("exceptque"));
-                aQuestion.setUserid(rs.getInt("userid"));
-                aQuestion.setTime(rs.getString("time"));
+            while (rs.next()) {
+                int queid = rs.getInt("queid");
+                int userid = rs.getInt("userid");
+                String queUname = rs.getString("username");
+                String title = rs.getString("title");
+                String detailsQue = rs.getString("detailsque");
+                String time = rs.getString("time");
+                askQuestion aQuestion = new askQuestion(queid, title, detailsQue, userid, queUname, time);
+                list.add(aQuestion);
             }
         } catch (Exception e) {
-            System.err.println(e+" Error while fetch question into question.jsp page ");
+            System.err.println(e + " Error while fetch question into question.jsp page ");
         }
-        return aQuestion;
+        return list;
     }
-    
+
 //    Method for fetch question into questions.jsp page - end here
 }
