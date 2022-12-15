@@ -14,24 +14,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class askQuestionServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         res.setContentType("text/html;charset=UTF-8");
         try {
             String title = req.getParameter("title");
             String detailsTxt = req.getParameter("detailsTxt");
-            String exceptTxt = req.getParameter("exceptTxt");
+            String replaceDetailsTxt = detailsTxt.replace("'", "\\'");
 
             HttpSession userActiveId = req.getSession();
             User uid = (User) userActiveId.getAttribute("userActive");
 
             Connection conObj = DBConnection.isConnection();
             askQuestionDao dao = new askQuestionDao(conObj);
-            askQuestion aQuestion = new askQuestion(title, detailsTxt, exceptTxt, Integer.parseInt(uid.getId()));
+            askQuestion aQuestion = new askQuestion(title, replaceDetailsTxt, Integer.parseInt(uid.getId()));
 
             Message msgObj;
             HttpSession askQueMsgSes = req.getSession();
-            
+
             if (conObj != null) {
                 if (dao.askQuestion(aQuestion) == true) {
                     res.sendRedirect("questions.jsp");

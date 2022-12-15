@@ -3,7 +3,6 @@ public class askQuestion {
     private int queid;
     private String title;
     private String detailsque;
-    private String exceptque;
     private int userid;
     private String uname;
     private String time;
@@ -11,10 +10,9 @@ public class askQuestion {
     public askQuestion() {
     }
 
-    public askQuestion(String title, String detailsque, String exceptque, int userid) {
+    public askQuestion(String title, String detailsque, int userid) {
         this.title = title;
         this.detailsque = detailsque;
-        this.exceptque = exceptque;
         this.userid = userid;
     }
 
@@ -47,10 +45,6 @@ public class askQuestion {
         this.detailsque = detailsque;
     }
 
-    public void setExceptque(String exceptque) {
-        this.exceptque = exceptque;
-    }
-
     public void setUserid(int userid) {
         this.userid = userid;
     }
@@ -73,10 +67,6 @@ public class askQuestion {
 
     public String getDetailsque() {
         return detailsque;
-    }
-
-    public String getExceptque() {
-        return exceptque;
     }
 
     public int getUserid() {

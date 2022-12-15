@@ -23,7 +23,7 @@ public class askQuestionDao {
         boolean f = false;
         try {
             if (con != null) {
-                String insertQuery = "insert into askquestion(title,detailsque,exceptque,userid) values('" + aQuestion.getTitle() + "','" + aQuestion.getDetailsque() + "','" + aQuestion.getExceptque() + "'," + aQuestion.getUserid() + ");";
+                String insertQuery = "insert into askquestion(title,detailsque,userid) values('" + aQuestion.getTitle() + "','" + aQuestion.getDetailsque() + "'," + aQuestion.getUserid() + ");";
                 pst = con.prepareStatement(insertQuery);
                 pst.executeUpdate();
                 f = true;
@@ -39,7 +39,6 @@ public class askQuestionDao {
     public ArrayList<askQuestion> fetchQuestion() {
         ArrayList<askQuestion> list = new ArrayList<>();
         try {
-//            String selectQuery = "SELECT signup.userid,signup.username,askquestion.queid,askquestion.title,askquestion.detailsque,askquestion.time FROM signup LEFT JOIN askquestion ON signup.userid = askquestion.queid LIMIT 1;";
             String selectQuery = "SELECT  signup.userid,signup.username, askquestion.queid,askquestion.title,askquestion.detailsque,askquestion.time FROM signup LEFT JOIN askquestion ON signup.userid = askquestion.userid;";
             pst = con.prepareStatement(selectQuery);
             rs = pst.executeQuery();

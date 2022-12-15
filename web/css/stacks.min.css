@@ -18167,7 +18167,7 @@ body.theme-highcontrast .s-btn__link{
     opacity:0
 }
 .s-link,a{
-    color:var(--theme-link-color);
+    /*color:var(--theme-link-color);*/
     cursor:pointer;
     text-decoration:none;
     user-select:auto

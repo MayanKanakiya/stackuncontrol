@@ -85,20 +85,12 @@
                 <!--Ask question : title container end-->
 
                 <!--Ask question : ask question container start-->
-                <label for="editor-example-1" class="form-label mb-0">What are the details of your problem?</label>
+                <label for="editor-example-1" class="form-label mb-0">What are the details of your problem and what your excepting ?</label>
                 <div class="form-text my-0">Introduce the problem and expand on what you put in the title. Minimum 20 characters.</div>
                 <div id="editor-example-1" class="mb-3"></div>
                 <div id="preview1" class="d-none"></div>
                 <input type="hidden" class="form-control mb-3 text-dark" name="detailsTxt" id="txt1">
                 <!--Ask question : ask question container end-->
-
-                <!--Ask question : ask question excepted container start-->
-                <label for="editor-example-2" class="form-label mb-0">What did you try and what were you expecting?</label>
-                <div class="form-text my-0">Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters.</div>
-                <div id="editor-example-2" class="mb-4"></div>
-                <div id="preview2" class="d-none"></div>
-                <input type="hidden" class="form-control mb-3 text-dark" name="exceptTxt" id="txt2">
-                <!--Ask question : ask question excepted container end-->
 
                 <button type="submit" onclick="parseHTML()" id="questionBtn" disabled="disabled" class="btn btn-primary mb-4">Submit</button>
             </form>

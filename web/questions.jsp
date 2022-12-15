@@ -22,6 +22,8 @@
         <link href="css/styles_utility.css" rel="stylesheet" type="text/css"/>
         <link href="css/mediaQuery.css" rel="stylesheet" type="text/css"/>
         <link href="css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="node_modules/@stackoverflow/stacks-editor/dist/styles.css" />
+        <link href="css/stacks.min.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
@@ -69,20 +71,15 @@
                 <tbody>
                     <%
                                for(askQuestion aQuestion : list1){
+                               if(aQuestion.getTitle()==null && aQuestion.getDetailsque()==null)
+                                {
+                                    break;
+                                }
                                countNum++;
                     %>
                     <tr>
                         <td>
                             <div class="container">
-                                <script>
-                                    document.getElementById('countNum').innerHTML =<%= countNum-1 %> + " Questions";
-                                </script>
-                                <%
-                                if(aQuestion.getTitle()==null && aQuestion.getDetailsque()==null)
-                                {
-                                    break;
-                                }
-                                %>
                                 <div class="row mb-0 mb-3">
                                     <div class="col-12">
                                         <div class="d-flex align-items-center">
@@ -93,7 +90,20 @@
                                             <!--answer counter end-->
                                             <div class="flex-grow-1 ms-3">
                                                 <a href="#" class="fw-bold fs-4 mb-1 questionLink"><%= aQuestion.getTitle() %></a>
-                                                <%= aQuestion.getDetailsque() %>
+                                                <%
+                                                    //232
+                                                    String str = aQuestion.getDetailsque();
+                                                    str = str.replaceAll("\\<.*?\\>", "");
+                                                    if(str.length() >= 350){
+                                                %>
+                                                <div class="my-1"><%= str.substring(65,350)+"..." %></div>
+                                                <%
+                                                    }else{
+                                                    %>
+                                                 <div class="my-1"><%= str.substring(0,220)+"..."  %></div>                                                
+                                                    <%
+                                                    }
+                                                %>
                                             </div>
                                         </div>
                                     </div>
@@ -104,13 +114,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <%
-                                    }
-                                %>
-                                <!--question-1 end-->
                             </div>
                         </td>
                     </tr>
+                    <%
+                        }
+                    %>
                 </tbody>
             </table>
         </div>
@@ -119,10 +128,13 @@
         <!--boostrap script start here-->
         <script src="js/bootJs.js" defer type="text/javascript"></script>
         <script src="js/jquery.dataTables.js" type="text/javascript"></script>
+        <script src="node_modules/@stackoverflow/stacks-editor/dist/app.bundle.js"></script>
+        <script src="js/askQuestions.js" defer type="text/javascript"></script>
         <script>
-                                    $(document).ready(function () {
-                                        $('#example').DataTable();
-                                    });
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+            document.getElementById('countNum').innerHTML =<%= countNum %> + " Questions";
         </script>
     </body>
 </html>
