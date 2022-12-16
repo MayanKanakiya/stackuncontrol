@@ -35,17 +35,6 @@ mainForm.addEventListener('input', () => {
 });
 //function for disable button when textboxs are empty - end code here
 
-// remove 'plainText' text inside code - start here
-stackEditor.addEventListener('input', (e) => {
-    let languageEditorText = document.getElementsByClassName('js-language-indicator')[0];
-    if (languageEditorText !== null) {
-        languageEditorText.id = "languageText";
-        let languageText = document.getElementById('languageText');
-        languageText.innerText = "";
-    }
-});
-// remove 'plainText' text inside code - end here 
-
 // function for parseHTML to string - start here
 function parseHTML() {
     console.log(stackEditor.innerText)

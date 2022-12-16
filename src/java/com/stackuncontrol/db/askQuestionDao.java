@@ -23,7 +23,7 @@ public class askQuestionDao {
         boolean f = false;
         try {
             if (con != null) {
-                String insertQuery = "insert into askquestion(title,detailsque,userid) values('" + aQuestion.getTitle() + "','" + aQuestion.getDetailsque() + "'," + aQuestion.getUserid() + ");";
+                String insertQuery = "insert into askquestion(title,detailsque,userid,ranqueid) values('" + aQuestion.getTitle() + "','" + aQuestion.getDetailsque() + "'," + aQuestion.getUserid() + ",'"+aQuestion.getRanQueId()+"');";
                 pst = con.prepareStatement(insertQuery);
                 pst.executeUpdate();
                 f = true;
@@ -39,7 +39,7 @@ public class askQuestionDao {
     public ArrayList<askQuestion> fetchQuestion() {
         ArrayList<askQuestion> list = new ArrayList<>();
         try {
-            String selectQuery = "SELECT  signup.userid,signup.username, askquestion.queid,askquestion.title,askquestion.detailsque,askquestion.time FROM signup LEFT JOIN askquestion ON signup.userid = askquestion.userid;";
+            String selectQuery = "SELECT signup.userid,signup.username, askquestion.queid,askquestion.title,askquestion.detailsque,askquestion.ranqueid,askquestion.time FROM signup LEFT JOIN askquestion ON signup.userid = askquestion.userid;";
             pst = con.prepareStatement(selectQuery);
             rs = pst.executeQuery();
             while (rs.next()) {
@@ -48,8 +48,9 @@ public class askQuestionDao {
                 String queUname = rs.getString("username");
                 String title = rs.getString("title");
                 String detailsQue = rs.getString("detailsque");
+                String ranqueid = rs.getString("ranqueid");
                 String time = rs.getString("time");
-                askQuestion aQuestion = new askQuestion(queid, title, detailsQue, userid, queUname, time);
+                askQuestion aQuestion = new askQuestion(queid, title, detailsQue, userid, queUname, time,ranqueid);
                 list.add(aQuestion);
             }
         } catch (Exception e) {

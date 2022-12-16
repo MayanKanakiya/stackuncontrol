@@ -89,20 +89,19 @@
                                             </div>
                                             <!--answer counter end-->
                                             <div class="flex-grow-1 ms-3">
-                                                <a href="#" class="fw-bold fs-4 mb-1 questionLink"><%= aQuestion.getTitle() %></a>
+                                                <a href="discussion.jsp?que=<%= aQuestion.getRanQueId() %>" class="fw-bold fs-4 mb-1 questionLink"><%= aQuestion.getTitle() %></a>
                                                 <%
-                                                    //232
                                                     String str = aQuestion.getDetailsque();
-                                                    str = str.replaceAll("\\<.*?\\>", "");
+                                                    str = str.replaceAll("\\<.*?\\>", " ").replace("Edit", " ").replace("plaintext", " ");
                                                     if(str.length() >= 350){
                                                 %>
-                                                <div class="my-1"><%= str.substring(65,350)+"..." %></div>
+                                                <div class="my-1"><%= str.substring(0,350)+"..." %></div>
                                                 <%
                                                     }else{
-                                                    %>
-                                                 <div class="my-1"><%= str.substring(0,220)+"..."  %></div>                                                
-                                                    <%
-                                                    }
+                                                %>
+                                                <div class="my-1"><%= str.substring(0,345)+"..."  %></div>                                                
+                                                <%
+                                                }
                                                 %>
                                             </div>
                                         </div>

@@ -19,8 +19,11 @@ public class askQuestionServlet extends HttpServlet {
             throws ServletException, IOException {
         res.setContentType("text/html;charset=UTF-8");
         try {
+            System.out.println(askQuestionServlet.getAlphaNumericString());
+            
             String title = req.getParameter("title");
             String detailsTxt = req.getParameter("detailsTxt");
+            String ranQueId = askQuestionServlet.getAlphaNumericString();
             String replaceDetailsTxt = detailsTxt.replace("'", "\\'");
 
             HttpSession userActiveId = req.getSession();
@@ -28,7 +31,7 @@ public class askQuestionServlet extends HttpServlet {
 
             Connection conObj = DBConnection.isConnection();
             askQuestionDao dao = new askQuestionDao(conObj);
-            askQuestion aQuestion = new askQuestion(title, replaceDetailsTxt, Integer.parseInt(uid.getId()));
+            askQuestion aQuestion = new askQuestion(title, replaceDetailsTxt, Integer.parseInt(uid.getId()),ranQueId);
 
             Message msgObj;
             HttpSession askQueMsgSes = req.getSession();
@@ -49,5 +52,32 @@ public class askQuestionServlet extends HttpServlet {
         } catch (Exception e) {
             System.err.println(e);
         }
+    }
+
+    // function to generate a random string of length n
+    static String getAlphaNumericString() {
+
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(5);
+
+        for (int i = 0; i < 5; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int) (AlphaNumericString.length()
+                    * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+
+        return sb.toString();
     }
 }

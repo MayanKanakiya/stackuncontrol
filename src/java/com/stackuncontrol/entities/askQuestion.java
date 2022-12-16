@@ -5,24 +5,35 @@ public class askQuestion {
     private String detailsque;
     private int userid;
     private String uname;
+    private String ranQueId;
     private String time;
 
     public askQuestion() {
     }
 
-    public askQuestion(String title, String detailsque, int userid) {
+    public askQuestion(String title, String detailsque, int userid,String ranQueId) {
         this.title = title;
         this.detailsque = detailsque;
         this.userid = userid;
+        this.ranQueId = ranQueId;
     }
 
-    public askQuestion(int queid, String title, String detailsque, int userid, String uname, String time) {
+    public askQuestion(int queid, String title, String detailsque, int userid, String uname, String time,String ranQueId) {
         this.queid = queid;
         this.title = title;
         this.detailsque = detailsque;
         this.userid = userid;
         this.uname = uname;
         this.time = time;
+        this.ranQueId = ranQueId;
+    }
+
+    public String getRanQueId() {
+        return ranQueId;
+    }
+
+    public void setRanQueId(String ranQueId) {
+        this.ranQueId= ranQueId;
     }
 
     public void setTime(String time) {
