@@ -23,7 +23,7 @@ public class askQuestionDao {
         boolean f = false;
         try {
             if (con != null) {
-                String insertQuery = "insert into askquestion(title,detailsque,userid,ranqueid) values('" + aQuestion.getTitle() + "','" + aQuestion.getDetailsque() + "'," + aQuestion.getUserid() + ",'"+aQuestion.getRanQueId()+"');";
+                String insertQuery = "insert into askquestion(title,detailsque,userid,ranqueid) values('" + aQuestion.getTitle() + "','" + aQuestion.getDetailsque() + "'," + aQuestion.getUserid() + ",'" + aQuestion.getRanQueId() + "');";
                 pst = con.prepareStatement(insertQuery);
                 pst.executeUpdate();
                 f = true;
@@ -50,14 +50,37 @@ public class askQuestionDao {
                 String detailsQue = rs.getString("detailsque");
                 String ranqueid = rs.getString("ranqueid");
                 String time = rs.getString("time");
-                askQuestion aQuestion = new askQuestion(queid, title, detailsQue, userid, queUname, time,ranqueid);
+                askQuestion aQuestion = new askQuestion(queid, title, detailsQue, userid, queUname, time, ranqueid);
                 list.add(aQuestion);
             }
         } catch (Exception e) {
             System.err.println(e + " Error while fetch question into question.jsp page ");
         }
         return list;
-    }
-
 //    Method for fetch question into questions.jsp page - end here
+    }
+//    Method for discussion question into other page - start here
+
+    public ArrayList<askQuestion> discussion(String ranqueid) {
+        ArrayList<askQuestion> list = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT signup.userid,signup.username, askquestion.queid,askquestion.title,askquestion.detailsque,askquestion.ranqueid,askquestion.time FROM signup LEFT JOIN askquestion ON signup.userid = askquestion.userid WHERE askquestion.ranqueid='" + ranqueid + "';";
+            pst = con.prepareStatement(selectQuery);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                int queid = rs.getInt("queid");
+                int userid = rs.getInt("userid");
+                String queUname = rs.getString("username");
+                String title = rs.getString("title");
+                String detailsQue = rs.getString("detailsque");
+                String time = rs.getString("time");
+                askQuestion aQuestion = new askQuestion(queid, title, detailsQue, userid, queUname, time);
+                list.add(aQuestion);
+            }
+        } catch (Exception e) {
+            System.out.println(e + " Error while fetch the question into other page ");
+        }
+        return list;
+    }
+//    Method for discussion question into other page - end here
 }
