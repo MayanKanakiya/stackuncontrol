@@ -1,5 +1,6 @@
 package com.stackuncontrol.db;
 
+import com.stackuncontrol.entities.PostAns;
 import com.stackuncontrol.entities.askQuestion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -83,4 +84,21 @@ public class askQuestionDao {
         return list;
     }
 //    Method for discussion question into other page - end here
+
+//    Method for insert postAns into post table - start code here
+    public boolean insertPost(PostAns pans) {
+        boolean f = false;
+        try {
+            if (con != null) {
+                String insertQuery = "insert into post(postDetail,postuid,postuname,queid) values('" + pans.getPostDetail() + "'," + pans.getPostuid()+ ",'" + pans.getPostuname() + "'," + pans.getQueid() + ");";
+                pst = con.prepareStatement(insertQuery);
+                pst.executeUpdate();
+                f = true;
+            }
+        } catch (Exception e) {
+            System.out.println(e + " Error while insert post ans into table ");
+        }
+        return f;
+    }
+//    Method for insert postAns into post table - end code here
 }

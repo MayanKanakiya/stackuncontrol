@@ -7,6 +7,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.stackuncontrol.helper.dbconnection.DBConnection"%>
 <%@page import="com.stackuncontrol.db.askQuestionDao"%>
+<%@page import="com.stackuncontrol.entities.Message"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -36,7 +37,7 @@
             ArrayList<askQuestion> list1 =  dao.discussion(str);
         %>
         <!--section 2 start here-->
-        <div class="container my-5">
+        <div class="container questionContainer my-5">
             <%
                if(list1.isEmpty()){
             %>
@@ -50,6 +51,15 @@
             <div class="d-flex mb-1">
                 <%       
                           for(askQuestion aQuestion : list1){
+//                          send the queid in postAnsServlet servlet page - start code here
+                                ServletContext scQueid = getServletContext();
+                               scQueid.setAttribute("queid", aQuestion.getQueid());
+//                          send the queid in postAnsServlet servlet page - end code here
+
+//                          send the queRandId in postAnsServlet servlet page - start code here
+                                ServletContext scRandQueId = getServletContext();
+                               scRandQueId.setAttribute("ranQueid", str);
+//                          send the queRandId in postAnsServlet servlet page - end code here
                 %>
                 <div class="p-1"> <h1 class="mb-0"><%= aQuestion.getTitle() %></h1></div>
                 <div class="ms-auto p-1"><a href="askQuestions.jsp" class="btn btn-primary btnAnimation">Ask question</a></div>
@@ -62,7 +72,7 @@
                     <i class="fa fa-thumbs-o-up me-1" aria-hidden="true" style="font-size:56px;cursor: pointer;"></i>
                     <p class="text-center" style="font-size: 20px;">0</p>
                 </div>
-                <div class="flex-grow-1 ms-3">
+                <div class="flex-grow-1 ms-3 codePalette">
                     <p>
                         <%= aQuestion.getDetailsque()%>
                     </p>
@@ -83,19 +93,62 @@
         <!--section 2 end here-->
 
         <!--section 3 start here-->
-
+        <!--user post comment-->
         <!--section 3 end here-->
 
         <!--section 4 start here-->
+
+        <%
+        if(user==null){
+        %>
+        <div class="container my-5 mb-5">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading fw-bold my-4">You must be logged in to post your answer on Stack Uncontrol</h4>
+                <p><a href="signin.jsp" style="text-decoration: none;">Sign in</a> or <a href="signup.jsp" style="text-decoration: none;">Sign up</a></p>
+            </div>
+        </div>
+        <%
+            }else{
+        %>
         <div class="container">
             <hr>
+            <!--alert message code start here-->
+            <%
+                         Message msgObj = (Message) session.getAttribute("postAnsMsg");
+                          if (msgObj != null) {
+            %>
+            <!--alert code start here-->
+            <div class="alert <%= msgObj.getCls()%> alert-dismissible fade show" role="alert">
+                <strong><i class="<%= msgObj.getSign()%> ms-0 me-2" aria-hidden="true"></i></strong> <%= msgObj.getContent()%>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <%
+                session.removeAttribute("postAnsMsg");
+                }
+            %>
+            <!--alert code end here-->
+            <!--alert message code end here-->
             <h2>Your Answer:</h2>
+            <form id="postAnsMainForm" action="postAnsServlet" method="POST">
+                <!--Ask question : ask question container start-->
+                <div id="editor-example-1" class="mb-3"></div>
+                <div id="preview1" class="d-none"></div>
+                <input type="hidden" class="form-control mb-3 text-dark" name="postAns" id="txt1">
+                <!--Ask question : ask question container end-->                
+
+                <button type="submit" onclick="parseHTML()" id="postAnsBtn" disabled="disabled" class="btn btn-primary mb-4">Post your answer</button>
+            </form>
         </div>
+        <%
+            }
+        %>
         <!--section 4 end here-->
 
         <%@ include file="navbar_footer/footer.html" %>
         <!--boostrap script start here-->
         <script src="js/bootJs.js" defer type="text/javascript"></script>
         <script src="node_modules/@stackoverflow/stacks-editor/dist/app.bundle.js"></script>
+        <script src="js/stacks.min.js" type="text/javascript"></script>
+        <script src="js/postAns.js" type="text/javascript"></script>
     </body>
 </html>

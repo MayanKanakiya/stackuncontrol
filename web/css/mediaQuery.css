@@ -73,6 +73,9 @@
         justify-content: center !important;
         align-content: center !important;
     }
+    .dataTables_wrapper{
+        width: 98%;
+    }
 }
 /*testimonial carousel silder start*/
 @media only screen and (max-width: 1200px) {
@@ -125,4 +128,19 @@
     }
 }
 /*counter cards css end*/
+/*discussion code palette css start*/
+.codePalette{
+    width: 60%;
+}
+@media only screen and (max-width: 1486px) {
+    .codePalette{
+        width: 60%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .questionContainer{
+       max-width:771px !important;
+    }
+}
+/*discussion code palette css end*/
 

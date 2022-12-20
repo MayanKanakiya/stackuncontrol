@@ -79,38 +79,36 @@
                     %>
                     <tr>
                         <td>
-                            <div class="container">
-                                <div class="row mb-0 mb-3">
-                                    <div class="col-12">
-                                        <div class="d-flex align-items-center">
-                                            <!--answer counter start-->
-                                            <div class="flex-shrink-0">
-                                                <p class="mb-0 bg-light">1 answer</p>
-                                            </div>
-                                            <!--answer counter end-->
-                                            <div class="flex-grow-1 ms-3">
-                                                <a href="discussion.jsp?que=<%= aQuestion.getRanQueId() %>" class="fw-bold fs-4 mb-1 questionLink"><%= aQuestion.getTitle() %></a>
-                                                <%
-                                                    String str = aQuestion.getDetailsque();
-                                                    str = str.replaceAll("\\<.*?\\>", " ").replace("Edit", " ").replace("plaintext", " ");
-                                                    if(str.length() >= 350){
-                                                %>
-                                                <div class="my-1"><%= str.substring(0,350)+"..." %></div>
-                                                <%
-                                                    }else{
-                                                %>
-                                                <div class="my-1"><%= str.substring(0,345)+"..."  %></div>                                                
-                                                <%
-                                                }
-                                                %>
-                                            </div>
+                            <div class="row mb-0 mb-3">
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center">
+                                        <!--answer counter start-->
+                                        <div class="flex-shrink-0">
+                                            <p class="mb-0 bg-light">1 answer</p>
+                                        </div>
+                                        <!--answer counter end-->
+                                        <div class="flex-grow-1 ms-3">
+                                            <a href="discussion.jsp?que=<%= aQuestion.getRanQueId() %>" class="fw-bold fs-4 mb-1 questionLink"><%= aQuestion.getTitle() %></a>
+                                            <%
+                                                String str = aQuestion.getDetailsque();
+                                                str = str.replaceAll("\\<.*?\\>", " ").replace("Edit", " ").replace("plaintext", " ");
+                                                if(str.length() >= 350){
+                                            %>
+                                            <div class="my-1"><%= str.substring(0,350)+"..." %></div>
+                                            <%
+                                                }else{
+                                            %>
+                                            <div class="my-1"><%= str.substring(0,345)+"..."  %></div>                                                
+                                            <%
+                                            }
+                                            %>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="d-flex flex-row-reverse align-items-center">
-                                            <p class="mb-0 me-5"><%= aQuestion.getUname() %><span>, asked <%= aQuestion.getTime()  %></span></p>
-                                            <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2">
-                                        </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex flex-row-reverse align-items-center">
+                                        <p class="mb-0 me-5"><%= aQuestion.getUname() %><span>, asked <%= aQuestion.getTime()  %></span></p>
+                                        <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2">
                                     </div>
                                 </div>
                             </div>
