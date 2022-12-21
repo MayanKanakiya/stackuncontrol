@@ -90,7 +90,7 @@ public class askQuestionDao {
         boolean f = false;
         try {
             if (con != null) {
-                String insertQuery = "insert into post(postDetail,postuid,postuname,queid) values('" + pans.getPostDetail() + "'," + pans.getPostuid()+ ",'" + pans.getPostuname() + "'," + pans.getQueid() + ");";
+                String insertQuery = "insert into post(postDetail,postuname,ranqueid) values('" + pans.getPostDetail() + "','" + pans.getPostuname() + "','" + pans.getRanQueid() + "');";
                 pst = con.prepareStatement(insertQuery);
                 pst.executeUpdate();
                 f = true;
@@ -101,4 +101,27 @@ public class askQuestionDao {
         return f;
     }
 //    Method for insert postAns into post table - end code here
+
+//    Method for fetch the user post into discusstion.jsp page - start code
+    public ArrayList<PostAns> userPost(String ranqueid) {
+        ArrayList<PostAns> list = new ArrayList<>();
+        try {
+            String selectQuery = "select * from post where ranqueid='" + ranqueid + "';";
+            pst = con.prepareStatement(selectQuery);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                int postid = rs.getInt("postid");
+                String postDetails = rs.getString("postDetail");
+                String postuname = rs.getString("postuname");
+                String postRanQueId = rs.getString("ranqueid");
+                String time = rs.getString("time");
+                PostAns pans = new PostAns(postid, postDetails, postuname, postRanQueId, time);
+                list.add(pans);
+            }
+        } catch (Exception e) {
+            System.out.println(e + " Error while fetch the user post into discusstion.jsp page ");
+        }
+        return list;
+    }
+//    Method for fetch the user post into discusstion.jsp page - end code
 }

@@ -30,18 +30,13 @@ public class postAnsServlet extends HttpServlet {
 //        get the post postuid and postunam column - end code
 
 //        get the post queid column - start code
-        ServletContext scQueid = getServletContext();
-        int queid = (int) scQueid.getAttribute("queid");
-//        get the post queid column - end code
-
-//        get the post queid column - start code
         ServletContext scRandQueId = getServletContext();
         String randQueid = (String) scRandQueId.getAttribute("ranQueid");
 //        get the post queid column - end code
 
         Connection conObj = DBConnection.isConnection();
         askQuestionDao dao = new askQuestionDao(conObj);
-        PostAns pans = new PostAns(replaceDetailsTxt, Integer.parseInt(uid.getId()), uid.getUname(), queid);
+        PostAns pans = new PostAns(replaceDetailsTxt, uid.getUname(), randQueid);
         Message msgObj;
         HttpSession postAnsSession = req.getSession();
 
@@ -50,21 +45,16 @@ public class postAnsServlet extends HttpServlet {
                 msgObj = new Message("Your post  added successfully.", "Success:", "alert-success", "fa fa-check-circle");
                 postAnsSession.setAttribute("postAnsMsg", msgObj);
                 res.sendRedirect("discussion.jsp?que=" + randQueid);
-                scQueid.removeAttribute("queid");
-                scRandQueId.removeAttribute("ranQueid");
             } else {
                 msgObj = new Message("Your post  not added, something went wrong.", "Error:", "alert-danger", "fa fa-exclamation-triangle");
                 postAnsSession.setAttribute("postAnsMsg", msgObj);
                 res.sendRedirect("discussion.jsp?que=" + randQueid);
-                scQueid.removeAttribute("queid");
-                scRandQueId.removeAttribute("ranQueid");
             }
         } else {
             msgObj = new Message("Connection Error.", "Error:", "alert-danger", "fa fa-exclamation-triangle");
             postAnsSession.setAttribute("postAnsMsg", msgObj);
             res.sendRedirect("discussion.jsp?que=" + randQueid);
-            scQueid.removeAttribute("queid");
-            scRandQueId.removeAttribute("ranQueid");
         }
+        scRandQueId.removeAttribute("ranQueid");
     }
 }

@@ -8,6 +8,7 @@
 <%@page import="com.stackuncontrol.helper.dbconnection.DBConnection"%>
 <%@page import="com.stackuncontrol.db.askQuestionDao"%>
 <%@page import="com.stackuncontrol.entities.Message"%>
+<%@page import="com.stackuncontrol.entities.PostAns"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,6 +36,7 @@
             }
             askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
             ArrayList<askQuestion> list1 =  dao.discussion(str);
+            ArrayList<PostAns> list2 =  dao.userPost(str);
         %>
         <!--section 2 start here-->
         <div class="container questionContainer my-5">
@@ -51,11 +53,6 @@
             <div class="d-flex mb-1">
                 <%       
                           for(askQuestion aQuestion : list1){
-//                          send the queid in postAnsServlet servlet page - start code here
-                                ServletContext scQueid = getServletContext();
-                               scQueid.setAttribute("queid", aQuestion.getQueid());
-//                          send the queid in postAnsServlet servlet page - end code here
-
 //                          send the queRandId in postAnsServlet servlet page - start code here
                                 ServletContext scRandQueId = getServletContext();
                                scRandQueId.setAttribute("ranQueid", str);
@@ -91,13 +88,46 @@
             </div>
         </div>
         <!--section 2 end here-->
-
-        <!--section 3 start here-->
-        <!--user post comment-->
-        <!--section 3 end here-->
-
         <!--section 4 start here-->
-
+        <div class="container questionContainer my-5">
+            <%
+                       if(list2.isEmpty()){
+            %>
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading my-4">User post not available in this question.</h4>
+                <p class="mb-4">Know someone who can answer? Share a link to this question via <a target="_blank" href="https://mail.google.com/">email</a>, <a target="_blank" href="https://twitter.com">Twitter</a>, or <a target="_blank" href="https://facebook.com">Facebook</a>.</p>
+            </div>
+            <%
+           }else{
+                    for(PostAns pans : list2){
+            %>
+            <hr>
+            <div class="d-flex">
+                <div class="flex-shrink-0">
+                    <!--<i class="fa fa-thumbs-up me-1" aria-hidden="true" style="font-size:56px;cursor: pointer;"></i>-->
+                    <i class="fa fa-thumbs-o-up me-1" aria-hidden="true" style="font-size:56px;cursor: pointer;"></i>
+                    <p class="text-center" style="font-size: 20px;">0</p>
+                </div>
+                <div class="flex-grow-1 ms-3 codePalette">
+                    <p><%= pans.getPostDetail()%></p>
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2 flex-fill"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</div>
+                        <div class="p-2">     
+                            <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2"> <%= pans.getPostuname()%> <p class="my-1">Asked <strong><%= pans.getTime()%></strong> | Like <strong>1</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <%
+                            }
+                        %>
+            <hr>
+            <%
+                }
+            %>
+        </div>
+        <!--section 4 start here-->
+        <!--section 3 start here-->
         <%
         if(user==null){
         %>
@@ -142,8 +172,7 @@
         <%
             }
         %>
-        <!--section 4 end here-->
-
+        <!--section 3 end here-->
         <%@ include file="navbar_footer/footer.html" %>
         <!--boostrap script start here-->
         <script src="js/bootJs.js" defer type="text/javascript"></script>

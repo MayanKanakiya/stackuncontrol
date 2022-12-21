@@ -4,28 +4,25 @@ public class PostAns {
 
     private int postid;
     private String postDetail;
-    private int postuid;
     private String postuname;
-    private int queid;
+    private String ranQueid;
     private String time;
 
     public PostAns() {
     }
 
-    public PostAns(int postid, String postDetail, int postuid, String postuname, int queid, String time) {
+    public PostAns(int postid, String postDetail, String postuname, String ranQueid, String time) {
         this.postid = postid;
         this.postDetail = postDetail;
-        this.postuid = postuid;
         this.postuname = postuname;
-        this.queid = queid;
+        this.ranQueid = ranQueid;
         this.time = time;
     }
 
-    public PostAns(String postDetail, int postuid, String postuname, int queid) {
+    public PostAns(String postDetail, String postuname, String ranQueid) {
         this.postDetail = postDetail;
-        this.postuid = postuid;
         this.postuname = postuname;
-        this.queid = queid;
+        this.ranQueid = ranQueid;
     }
     
 
@@ -45,14 +42,6 @@ public class PostAns {
         this.postDetail = postDetail;
     }
 
-    public int getPostuid() {
-        return postuid;
-    }
-
-    public void setPostuid(int postuid) {
-        this.postuid = postuid;
-    }
-
     public String getPostuname() {
         return postuname;
     }
@@ -61,13 +50,14 @@ public class PostAns {
         this.postuname = postuname;
     }
 
-    public int getQueid() {
-        return queid;
+    public String getRanQueid() {
+        return ranQueid;
     }
 
-    public void setQueid(int queid) {
-        this.queid = queid;
+    public void setRanQueid(String ranQueid) {
+        this.ranQueid = ranQueid;
     }
+
 
     public String getTime() {
         return time;
