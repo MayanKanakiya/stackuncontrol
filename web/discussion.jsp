@@ -74,8 +74,8 @@
                         <%= aQuestion.getDetailsque()%>
                     </p>
 
-                    <div class="d-flex justify-content-between">
-                        <div class="p-2 flex-fill"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a style="color:black !important;" href="edit.jsp?que=<%=str %>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a>
                         <div class="p-2">     
                             <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2"><%= aQuestion.getUname() %>
                         </div>
@@ -94,7 +94,7 @@
                        if(list2.isEmpty()){
             %>
             <div class="alert alert-info" role="alert">
-                <h4 class="alert-heading my-4">User post not available in this question.</h4>
+                <h4 class="alert-heading my-4">User post not available on this question.</h4>
                 <p class="mb-4">Know someone who can answer? Share a link to this question via <a target="_blank" href="https://mail.google.com/">email</a>, <a target="_blank" href="https://twitter.com">Twitter</a>, or <a target="_blank" href="https://facebook.com">Facebook</a>.</p>
             </div>
             <%
@@ -111,16 +111,16 @@
                 <div class="flex-grow-1 ms-3 codePalette">
                     <p><%= pans.getPostDetail()%></p>
                     <div class="d-flex justify-content-between">
-                        <div class="p-2 flex-fill"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</div>
+                      <a style="color:black !important;" href="edit.jsp?que=1"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a>
                         <div class="p-2">     
                             <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2"> <%= pans.getPostuname()%> <p class="my-1">Asked <strong><%= pans.getTime()%></strong> | Like <strong>1</strong></p>
                         </div>
                     </div>
                 </div>
             </div>
-                        <%
-                            }
-                        %>
+            <%
+                }
+            %>
             <hr>
             <%
                 }
@@ -135,6 +135,17 @@
             <div class="alert alert-warning" role="alert">
                 <h4 class="alert-heading fw-bold my-4">You must be logged in to post your answer on Stack Uncontrol</h4>
                 <p><a href="signin.jsp" style="text-decoration: none;">Sign in</a> or <a href="signup.jsp" style="text-decoration: none;">Sign up</a></p>
+            </div>
+        </div>
+        <%
+            }else{
+                for(askQuestion aQuestion : list1){
+                if(Integer.parseInt(user.getId())==aQuestion.getQueid()){
+        %>
+        <div class="container my-5 mb-5">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading fw-bold my-4">You cannot able to answer on this question</h4>
+                <p class="mb-4">Know someone who can answer? Share a link to this question via <a target="_blank" href="https://mail.google.com/">email</a>, <a target="_blank" href="https://twitter.com">Twitter</a>, or <a target="_blank" href="https://facebook.com">Facebook</a>.</p>
             </div>
         </div>
         <%
@@ -170,6 +181,8 @@
             </form>
         </div>
         <%
+            }
+            }
             }
         %>
         <!--section 3 end here-->

@@ -19,8 +19,6 @@ public class askQuestionServlet extends HttpServlet {
             throws ServletException, IOException {
         res.setContentType("text/html;charset=UTF-8");
         try {
-            System.out.println(askQuestionServlet.getAlphaNumericString());
-            
             String title = req.getParameter("title");
             String detailsTxt = req.getParameter("detailsTxt");
             String ranQueId = askQuestionServlet.getAlphaNumericString();

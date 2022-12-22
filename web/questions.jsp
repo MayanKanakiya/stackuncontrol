@@ -98,7 +98,7 @@
                                             <%
                                                 }else{
                                             %>
-                                            <div class="my-1"><%= str.substring(0,345)+"..."  %></div>                                                
+                                            <div class="my-1"><%= str.substring(0,299)+"..."  %></div>                                                
                                             <%
                                             }
                                             %>

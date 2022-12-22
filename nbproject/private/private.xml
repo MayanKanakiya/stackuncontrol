@@ -3,8 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/CodingGround/JAVA/stackuncontrol/src/java/com/stackuncontrol/servlet/askQuestionServlet.java</file>
             <file>file:/D:/CodingGround/JAVA/stackuncontrol/src/java/com/stackuncontrol/servlet/postAnsServlet.java</file>
-            <file>file:/D:/CodingGround/JAVA/stackuncontrol/src/java/com/stackuncontrol/db/askQuestionDao.java</file>
             <file>file:/D:/CodingGround/JAVA/stackuncontrol/src/java/com/stackuncontrol/entities/PostAns.java</file>
         </group>
     </open-files>
