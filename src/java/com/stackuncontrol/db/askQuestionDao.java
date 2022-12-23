@@ -90,7 +90,7 @@ public class askQuestionDao {
         boolean f = false;
         try {
             if (con != null) {
-                String insertQuery = "insert into post(postDetail,postuname,ranqueid) values('" + pans.getPostDetail() + "','" + pans.getPostuname() + "','" + pans.getRanQueid() + "');";
+                String insertQuery = "insert into post(postDetail,postuname,ranqueid,ranpostid) values('" + pans.getPostDetail() + "','" + pans.getPostuname() + "','" + pans.getRanQueid() + "','"+pans.getRanPostid()+"');";
                 pst = con.prepareStatement(insertQuery);
                 pst.executeUpdate();
                 f = true;
@@ -114,8 +114,9 @@ public class askQuestionDao {
                 String postDetails = rs.getString("postDetail");
                 String postuname = rs.getString("postuname");
                 String postRanQueId = rs.getString("ranqueid");
+                String postRanPostId = rs.getString("ranpostid");
                 String time = rs.getString("time");
-                PostAns pans = new PostAns(postid, postDetails, postuname, postRanQueId, time);
+                PostAns pans = new PostAns(postid, postDetails, postuname, postRanQueId,postRanPostId, time);
                 list.add(pans);
             }
         } catch (Exception e) {

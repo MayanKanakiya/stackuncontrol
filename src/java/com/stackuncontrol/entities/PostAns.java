@@ -6,25 +6,35 @@ public class PostAns {
     private String postDetail;
     private String postuname;
     private String ranQueid;
+    private String ranPostid;
     private String time;
 
     public PostAns() {
     }
 
-    public PostAns(int postid, String postDetail, String postuname, String ranQueid, String time) {
+    public PostAns(int postid, String postDetail, String postuname, String ranQueid, String ranPostid, String time) {
         this.postid = postid;
         this.postDetail = postDetail;
         this.postuname = postuname;
         this.ranQueid = ranQueid;
+        this.ranPostid = ranPostid;
         this.time = time;
     }
 
-    public PostAns(String postDetail, String postuname, String ranQueid) {
+    public PostAns(String postDetail, String postuname, String ranQueid, String ranPostid) {
         this.postDetail = postDetail;
         this.postuname = postuname;
         this.ranQueid = ranQueid;
+        this.ranPostid = ranPostid;
     }
-    
+
+    public String getRanPostid() {
+        return ranPostid;
+    }
+
+    public void setRanPostid(String ranPostid) {
+        this.ranPostid = ranPostid;
+    }
 
     public int getPostid() {
         return postid;
@@ -58,7 +68,6 @@ public class PostAns {
         this.ranQueid = ranQueid;
     }
 
-
     public String getTime() {
         return time;
     }
@@ -66,5 +75,5 @@ public class PostAns {
     public void setTime(String time) {
         this.time = time;
     }
-    
+
 }

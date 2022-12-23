@@ -73,12 +73,30 @@
                     <p>
                         <%= aQuestion.getDetailsque()%>
                     </p>
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a style="color:black !important;" href="edit.jsp?que=<%=str %>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a>
-                        <div class="p-2">     
-                            <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2"><%= aQuestion.getUname() %>
-                        </div>
+                    <div class="d-flex mb-3 align-items-center">
+                        <%
+                              if(user!=null){
+                            if(Integer.parseInt(user.getId())==aQuestion.getUserid()){
+                        %>
+                        <div class="p-2"><a style="color:black !important;" href="edit.jsp?que=<%=str %>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
+                        <div class="p-2">   <a style="color:black !important;" href="delete.jsp?que=<%=str %>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
+                        <%
+                            }else{
+                        %>
+                        <div class="p-2"><a style="color:black !important;" href="edit.jsp?que=<%=str %>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
+                        <%
+                        }
+                        }
+else{
+                        %>
+                        <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
+                        <%
+                        }
+                        %>
+                        <div class="ms-auto p-2">   
+                            <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2"><%= aQuestion.getUname() %></div>
                     </div>
                 </div>
                 <%
@@ -110,12 +128,31 @@
                 </div>
                 <div class="flex-grow-1 ms-3 codePalette">
                     <p><%= pans.getPostDetail()%></p>
-                    <div class="d-flex justify-content-between">
-                      <a style="color:black !important;" href="edit.jsp?que=1"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a>
-                        <div class="p-2">     
-                            <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2"> <%= pans.getPostuname()%> <p class="my-1">Asked <strong><%= pans.getTime()%></strong> | Like <strong>1</strong></p>
-                        </div>
+                    <div class="d-flex mb-3 align-items-center">
+                        <%
+                        if(user!=null){
+                        if(user.getUname().equals(pans.getPostuname())){
+                        %>
+                        <div class="p-2"><a style="color:black !important;" href="edit.jsp?que=<%= pans.getRanPostid()%>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="delete.jsp?que=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
+                        <%
+                            }else{
+                        %>
+                        <div class="p-2"><a style="color:black !important;" href="edit.jsp?que=<%=str %>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
+                        <%
+                            }
+                            }else{
+                        %>
+                        <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
+                        <%
+                        }
+                        %>
+                        <div class="ms-auto p-2">       
+                            <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2"> <%= pans.getPostuname()%> <p class="my-1">Asked <strong><%= pans.getTime()%></strong> | Like <strong>1</strong></p></div>
                     </div>
+
                 </div>
             </div>
             <%
@@ -140,7 +177,7 @@
         <%
             }else{
                 for(askQuestion aQuestion : list1){
-                if(Integer.parseInt(user.getId())==aQuestion.getQueid()){
+                if(Integer.parseInt(user.getId())==aQuestion.getUserid()){
         %>
         <div class="container my-5 mb-5">
             <div class="alert alert-warning" role="alert">

@@ -34,9 +34,11 @@ public class postAnsServlet extends HttpServlet {
         String randQueid = (String) scRandQueId.getAttribute("ranQueid");
 //        get the post queid column - end code
 
+        String ranPostId = askQuestionServlet.getAlphaNumericString();
+
         Connection conObj = DBConnection.isConnection();
         askQuestionDao dao = new askQuestionDao(conObj);
-        PostAns pans = new PostAns(replaceDetailsTxt, uid.getUname(), randQueid);
+        PostAns pans = new PostAns(replaceDetailsTxt, uid.getUname(), randQueid, ranPostId);
         Message msgObj;
         HttpSession postAnsSession = req.getSession();
 
@@ -56,5 +58,32 @@ public class postAnsServlet extends HttpServlet {
             res.sendRedirect("discussion.jsp?que=" + randQueid);
         }
         scRandQueId.removeAttribute("ranQueid");
+    }
+    // function to generate a random string of length n
+
+    static String getAlphaNumericString() {
+
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(5);
+
+        for (int i = 0; i < 5; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int) (AlphaNumericString.length()
+                    * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+
+        return sb.toString();
     }
 }

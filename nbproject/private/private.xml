@@ -5,7 +5,9 @@
         <group>
             <file>file:/D:/CodingGround/JAVA/stackuncontrol/src/java/com/stackuncontrol/servlet/askQuestionServlet.java</file>
             <file>file:/D:/CodingGround/JAVA/stackuncontrol/src/java/com/stackuncontrol/servlet/postAnsServlet.java</file>
+            <file>file:/D:/CodingGround/JAVA/stackuncontrol/src/java/com/stackuncontrol/db/askQuestionDao.java</file>
             <file>file:/D:/CodingGround/JAVA/stackuncontrol/src/java/com/stackuncontrol/entities/PostAns.java</file>
+            <file>file:/D:/CodingGround/JAVA/stackuncontrol/src/java/com/stackuncontrol/entities/askQuestion.java</file>
         </group>
     </open-files>
 </project-private>
