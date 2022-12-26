@@ -133,13 +133,13 @@ else{
                         if(user!=null){
                         if(user.getUname().equals(pans.getPostuname())){
                         %>
-                        <div class="p-2"><a style="color:black !important;" href="edit.jsp?que=<%= pans.getRanPostid()%>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
-                        <div class="p-2"><a style="color:black !important;" href="delete.jsp?que=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="edit.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="delete.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
                         <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
                         <%
                             }else{
                         %>
-                        <div class="p-2"><a style="color:black !important;" href="edit.jsp?que=<%=str %>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="edit.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
                         <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
                         <%
                             }
@@ -189,7 +189,6 @@ else{
             }else{
         %>
         <div class="container">
-            <hr>
             <!--alert message code start here-->
             <%
                          Message msgObj = (Message) session.getAttribute("postAnsMsg");

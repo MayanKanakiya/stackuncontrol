@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.stackuncontrol.entities.askQuestion"%>
+<%@page import="com.stackuncontrol.entities.Message"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.stackuncontrol.helper.dbconnection.DBConnection"%>
+<%@page import="com.stackuncontrol.db.askQuestionDao"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,10 +35,86 @@
                 <p>We welcome edits that make the post easier to understand and more valuable for readers. Because community members review edits, please try to make the post substantially better than how you found it, for example, by fixing grammar or adding additional resources and hyperlinks.</p>
             </div>
         </div>
-        <%@ include file="navbar_footer/footer.html" %>
+        <%
+            String editQue = request.getParameter("que");
+            String editPost = request.getParameter("post");
+//            star if block when edit the question.
+if(user!=null){
+            if(editQue!=null){
+             askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
+            ArrayList<askQuestion> list1 =  dao.fetchQuestion(editQue);
+        %>
+        <div class="container">
+            <form id="editQAMainForm" action="editQAServlet" method="POST">
+                <%
+                ServletContext sc = getServletContext();
+                sc.setAttribute("ranqueid", editQue);
+                %>
+                <%
+                   if(list1.isEmpty()){
+                %>
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading my-4">Someting went wrong!</h4>
+                    <p class="mb-4"><i class="fa fa-exclamation-triangle me-1" aria-hidden="true"></i>This question is not available.</p>
+                </div>
+                <%
+                    }else{
+                      for(askQuestion aQuestion : list1){
+                %>
+                <!--Ask question : ask question container start-->
+                <!--alert message code start here-->
+                <%
+                             Message msgObj = (Message) session.getAttribute("editQueMsg");
+                              if (msgObj != null) {
+                %>
+                <!--alert code start here-->
+                <div class="alert <%= msgObj.getCls()%> alert-dismissible fade show" role="alert">
+                    <strong><i class="<%= msgObj.getSign()%> ms-0 me-2" aria-hidden="true"></i></strong> <%= msgObj.getContent()%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <%
+                    session.removeAttribute("editQueMsg");
+                    }
+                %>
+                <!--alert code end here-->
+                <label class="form-text my-0">Edit title. Minimum 20 characters.</label>
+                <input type="text" class="form-control mb-3" id="title" name="editTitle" value="<%=aQuestion.getTitle() %>" placeholder="Enter title here">
+                <!--Ask question : ask question container start-->
+                <!--Ask question : ask question container start-->
+                <label class="form-text my-0">Edit Details. Minimum 20 characters.</label>
+                <div id="editor-example-1" class="mb-3"></div>
+                <div id="preview1" class="d-none"></div>
+                <input type="hidden" class="form-control mb-3 text-dark" name="editQuestionDetails" id="txt1">
+                <!--Ask question : ask question container end-->                
+                <script>
+                    <%
+                        String editDetails = aQuestion.getDetailsque();
+                        String replaceDetailsTxt = editDetails.replace("\"", "\\\"").replace("Edit", " ").replace("plaintext", " ");
+                    %>
+                    $(document).ready(() => {
+                        document.getElementById('editor1').innerHTML = `<%= replaceDetailsTxt %>`;
+                    });
+                </script>
+                <button type="submit" onclick="parseHTML()" id="editAnsBtn" disabled="disabled" class="btn btn-primary mb-4">Edit</button>
+                <%
+                    }
+                    }
+                %>
+            </form>
+        </div>
+        <%
+    }else{
+        out.println(editPost);
+    }
+    }else{
+    response.sendRedirect("discussion.jsp?que="+editQue);
+    }
+        %>
+        <%@ include file="navbar_footer/footer.html" %>   
         <!--boostrap script start here-->
         <script src="js/bootJs.js" defer type="text/javascript"></script>
         <script src="node_modules/@stackoverflow/stacks-editor/dist/app.bundle.js"></script>
         <script src="js/stacks.min.js" type="text/javascript"></script>
+        <script src="js/editqa.js" type="text/javascript"></script>
     </body>
 </html>

@@ -37,7 +37,6 @@
         </div>
         <%
         }else{
-            
         %>
         <div class="container my-4 mb-4">
             <h1 class="mb-3">Ask a public question</h1>

@@ -17,6 +17,13 @@ public class askQuestion {
         this.userid = userid;
         this.ranQueId = ranQueId;
     }
+    public askQuestion(String title, String detailsque, int userid,String ranQueId,String time) {
+        this.title = title;
+        this.detailsque = detailsque;
+        this.userid = userid;
+        this.ranQueId = ranQueId;
+        this.time = time;
+    }
 
     public askQuestion(int queid, String title, String detailsque, int userid, String uname, String time,String ranQueId) {
         this.queid = queid;
