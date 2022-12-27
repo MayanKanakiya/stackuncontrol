@@ -168,9 +168,27 @@ public class askQuestionDao {
         return f;
     }
 //    Method for update question page - end here
+//    Method for delete question page - end here
+    public boolean DeleteQue(askQuestion aQuestion, String ranqueid) {
+        boolean f = false;
+        try {
+            if (con != null) {
+                String updateQuery = "";
+                pst = con.prepareStatement(updateQuery);
+                pst.executeUpdate();
+                f = true;
+            } else {
+                f = false;
+            }
+        } catch (Exception e) {
+            System.out.println(e + " Error while delete questions details");
+        }
+        return f;
+    }
+//    Method for delete question page - end here
 //    Method for update post page - end here
 
-    public boolean updateQue(PostAns pans, String ranpostid) {
+    public boolean updatePost(PostAns pans, String ranpostid) {
         boolean f = false;
         try {
             if (con != null) {
@@ -187,4 +205,63 @@ public class askQuestionDao {
         return f;
     }
 //    Method for update post page - end here
+//    Method for delete post page - end here
+
+    public boolean DeletePost(PostAns pans, String ranpostid) {
+        boolean f = false;
+        try {
+            if (con != null) {
+                String updateQuery = "";
+                pst = con.prepareStatement(updateQuery);
+                pst.executeUpdate();
+                f = true;
+            } else {
+                f = false;
+            }
+        } catch (Exception e) {
+            System.out.println(e + " Error while delete post details");
+        }
+        return f;
+    }
+//    Method for delete post page - end here
+    //Method for insert askQuestion inF database - start here
+
+    public boolean revisionsQue(askQuestion aQuestion) {
+        boolean f = false;
+        try {
+            if (con != null) {
+                String insertQuery = "insert into revisions(editqadetails,editqauname,ranqueid) values('" + aQuestion.getDetailsque() + "','" + aQuestion.getUname() + "','" + aQuestion.getRanQueId() + "');";
+                pst = con.prepareStatement(insertQuery);
+                pst.executeUpdate();
+                f = true;
+            }
+        } catch (Exception e) {
+            System.err.println(e + " Error while insert revisions question into table ");
+        }
+        return f;
+    }
+    //Method for insert askQuestion in database - end here
+    //    Method for fetch question into questions.jsp page - start here
+
+    public ArrayList<askQuestion> fetchRevisionsData(String queranid) {
+        ArrayList<askQuestion> list = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT * from revisions where ranqueid='" + queranid + "';";
+            pst = con.prepareStatement(selectQuery);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                int queid = rs.getInt("id");
+                String detailsQue = rs.getString("editqadetails");
+                String uname = rs.getString("editqauname");
+                String ranqueid = rs.getString("ranqueid");
+                String time = rs.getString("time");
+                askQuestion aQuestion = new askQuestion(queid, detailsQue, uname, ranqueid, time);
+                list.add(aQuestion);
+            }
+        } catch (Exception e) {
+            System.err.println(e + " Error while fetch question into question.jsp page ");
+        }
+        return list;
+    }
+//    Method for fetch question into questions.jsp page - end here
 }

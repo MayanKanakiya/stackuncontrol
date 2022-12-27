@@ -2,6 +2,7 @@ package com.stackuncontrol.servlet;
 
 import com.stackuncontrol.db.askQuestionDao;
 import com.stackuncontrol.entities.Message;
+import com.stackuncontrol.entities.User;
 import com.stackuncontrol.entities.askQuestion;
 import com.stackuncontrol.helper.dbconnection.DBConnection;
 import java.io.IOException;
@@ -33,6 +34,24 @@ public class editQAServlet extends HttpServlet {
 
         aQuestion.setTitle(editTitle);
         aQuestion.setDetailsque(editQuestionDetails);
+
+//        insert revisions question and answer - start here
+        HttpSession userActiveId = req.getSession();
+        User uid = (User) userActiveId.getAttribute("userActive");
+        String ReplaceEditQuestionDetails = editQuestionDetails.replace("'", "\\'");
+        askQuestion aQuestion1 = new askQuestion(ReplaceEditQuestionDetails, uid.getUname(), ranqueid);
+        try {
+            if (conObj != null) {
+                if (dao.revisionsQue(aQuestion1) != true) {
+                    System.out.println("Error while insert revisions data into table(inside if block)");
+                }
+            } else {
+                System.out.println("Connection Error.");
+            }
+        } catch (Exception e) {
+            System.out.println(e + " Error while insert revisions data into table(inside catch block) ");
+        }
+//        insert revisions question and answer - end here
 
         if (conObj != null) {
             if (dao.updateQue(aQuestion, ranqueid) == true) {

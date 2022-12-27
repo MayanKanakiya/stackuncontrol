@@ -132,6 +132,9 @@
 .codePalette{
     width: 60%;
 }
+.RevisionsCodePalette{
+    width: 100%;
+}
 @media only screen and (max-width: 1486px) {
     .codePalette{
         width: 60%;

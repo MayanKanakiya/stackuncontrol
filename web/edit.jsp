@@ -38,7 +38,7 @@
         <%
             String editQue = request.getParameter("que");
             String editPost = request.getParameter("post");
-//            star if block when edit the question.
+//            start if block when edit the question.
 if(user!=null){
             if(editQue!=null){
              askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());

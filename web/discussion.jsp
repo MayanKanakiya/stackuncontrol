@@ -79,12 +79,14 @@
                             if(Integer.parseInt(user.getId())==aQuestion.getUserid()){
                         %>
                         <div class="p-2"><a style="color:black !important;" href="edit.jsp?que=<%=str %>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
-                        <div class="p-2">   <a style="color:black !important;" href="delete.jsp?que=<%=str %>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="delete.jsp?que=<%=str %>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="revisions.jsp?que=<%=str %>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Re-Edited</a></div>
                         <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
                         <%
                             }else{
                         %>
                         <div class="p-2"><a style="color:black !important;" href="edit.jsp?que=<%=str %>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="revisions.jsp?que=<%=str %>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Re-Edited</a></div>
                         <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
                         <%
                         }
@@ -135,11 +137,13 @@ else{
                         %>
                         <div class="p-2"><a style="color:black !important;" href="edit.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
                         <div class="p-2"><a style="color:black !important;" href="delete.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="revisions.jsp?que=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Re-Edited</a></div>
                         <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
                         <%
                             }else{
                         %>
                         <div class="p-2"><a style="color:black !important;" href="edit.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="revisions.jsp?que=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Re-Edited</a></div>
                         <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
                         <%
                             }
