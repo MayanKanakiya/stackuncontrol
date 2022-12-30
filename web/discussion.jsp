@@ -79,7 +79,28 @@
                             if(Integer.parseInt(user.getId())==aQuestion.getUserid()){
                         %>
                         <div class="p-2"><a style="color:black !important;" href="edit.jsp?que=<%=str %>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
-                        <div class="p-2"><a style="color:black !important;" href="delete.jsp?que=<%=str %>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
+                        <div class="p-2"><a style="color:black !important;" data-bs-toggle="modal" data-bs-target="#deleteQueModal" href="#"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
+                        <!--modal code start here for delete-->
+                        <div class="modal fade" id="deleteQueModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmation Alert</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="POST" action="deleteQAServlet">
+                                        <div class="modal-body">
+                                            Delete this question ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary btnAnimation" data-bs-dismiss="modal">No</button>
+                                            <a href="edit.jsp?delque=<%=str %>" class="btn btn-primary btnAnimation">Yes</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--modal code end here for delete-->
                         <div class="p-2"><a style="color:black !important;" href="revisions.jsp?que=<%=str %>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Re-Edited</a></div>
                         <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
                         <%
@@ -136,14 +157,33 @@ else{
                         if(user.getUname().equals(pans.getPostuname())){
                         %>
                         <div class="p-2"><a style="color:black !important;" href="edit.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
-                        <div class="p-2"><a style="color:black !important;" href="delete.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
-                        <div class="p-2"><a style="color:black !important;" href="revisions.jsp?que=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Re-Edited</a></div>
+                        <div class="p-2"><a style="color:black !important;" data-bs-toggle="modal" data-bs-target="#deletePostModal" href="#"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Delete</a></div>
+                        <!--modal code start here for delete post-->
+                        <div class="modal fade" id="deletePostModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmation Alert</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Delete this post ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btnAnimation" data-bs-dismiss="modal">No</button>
+                                        <a href="edit.jsp?delpost=<%= pans.getRanPostid()%>" class="btn btn-primary btnAnimation">Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--modal code end here for delete post-->
+                        <div class="p-2"><a style="color:black !important;" href="revisions.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Re-Edited</a></div>
                         <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
                         <%
                             }else{
                         %>
                         <div class="p-2"><a style="color:black !important;" href="edit.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a></div>
-                        <div class="p-2"><a style="color:black !important;" href="revisions.jsp?que=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Re-Edited</a></div>
+                        <div class="p-2"><a style="color:black !important;" href="revisions.jsp?post=<%= pans.getRanPostid()%>"><i class="fa fa-trash-o me-1" aria-hidden="true"></i>Re-Edited</a></div>
                         <div class="p-2"><a style="color:black !important;" href="mailto::mayankkanakiya182003@gmail.com"><i class="fa fa-share me-1" aria-hidden="true"></i>Share</a></div>
                         <%
                             }
@@ -186,11 +226,21 @@ else{
         <div class="container my-5 mb-5">
             <div class="alert alert-warning" role="alert">
                 <h4 class="alert-heading fw-bold my-4">You cannot able to answer on this question</h4>
-                <p class="mb-4">Know someone who can answer? Share a link to this question via <a target="_blank" href="https://mail.google.com/">email</a>, <a target="_blank" href="https://twitter.com">Twitter</a>, or <a target="_blank" href="https://facebook.com">Facebook</a>.</p>
+                <p class="mb-4">Know someone who can answer? Share a link to this question via <a target="_blank" href="https://mail.google.com/">email</a>, <a target="_blank" href="https://twitter.com">Twitter</a>, or <a target="_blank" href="https://facebook.com">Facebook</a>.</p>                                                                                                                                                     
             </div>
         </div>
         <%
-            }else{
+            }     
+            else if(dao.checkUPostExists(user.getUname(),str)){                
+        %>
+        <div class="container my-5 mb-5">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading fw-bold my-4">Add another answer ?</h4>
+                <p class="mb-4">You could use the edit link to refine and improve your existing answer instead.</p>
+            </div>
+        </div>
+        <%
+        }else{
         %>
         <div class="container">
             <!--alert message code start here-->
@@ -221,9 +271,9 @@ else{
             </form>
         </div>
         <%
-            }
-            }
-            }
+        }
+        }
+        }
         %>
         <!--section 3 end here-->
         <%@ include file="navbar_footer/footer.html" %>

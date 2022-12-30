@@ -169,6 +169,7 @@ public class askQuestionDao {
     }
 //    Method for update question page - end here
 //    Method for delete question page - end here
+
     public boolean DeleteQue(askQuestion aQuestion, String ranqueid) {
         boolean f = false;
         try {
@@ -186,8 +187,25 @@ public class askQuestionDao {
         return f;
     }
 //    Method for delete question page - end here
-//    Method for update post page - end here
 
+//    Method for add only one post by user - start here
+    public boolean checkUPostExists(String uname, String ranqueid) {
+        boolean f = false;
+        try {
+            String selectQuery = "SELECT * FROM `post` where postuname='" + uname + "' and ranqueid='" + ranqueid + "';";
+            pst = con.prepareStatement(selectQuery);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e + " Error while check user post exists or not ");
+        }
+        return f;
+    }
+//    Method for add only one post by user - end here
+
+//    Method for update post page - end here
     public boolean updatePost(PostAns pans, String ranpostid) {
         boolean f = false;
         try {

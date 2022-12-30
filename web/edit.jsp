@@ -37,9 +37,11 @@
         </div>
         <%
             String editQue = request.getParameter("que");
+            String delQue = request.getParameter("delque");
             String editPost = request.getParameter("post");
+            String delPost = request.getParameter("delpost");
 //            start if block when edit the question.
-if(user!=null){
+            if(user!=null){
             if(editQue!=null){
              askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
             ArrayList<askQuestion> list1 =  dao.fetchQuestion(editQue);
@@ -103,11 +105,15 @@ if(user!=null){
             </form>
         </div>
         <%
-    }else{
+    }else if(editPost!=null){
         out.println(editPost);
+    }else if(delQue!=null){
+        out.println(delQue);
+    }else if(delPost!=null){
+        out.println(delPost);
     }
     }else{
-    response.sendRedirect("discussion.jsp?que="+editQue);
+        response.sendRedirect("discussion.jsp?que="+editQue);
     }
         %>
         <%@ include file="navbar_footer/footer.html" %>   
