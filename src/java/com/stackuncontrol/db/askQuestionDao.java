@@ -170,12 +170,12 @@ public class askQuestionDao {
 //    Method for update question page - end here
 //    Method for delete question page - end here
 
-    public boolean DeleteQue(askQuestion aQuestion, String ranqueid) {
+    public boolean DeleteQue(String ranqueid) {
         boolean f = false;
         try {
             if (con != null) {
-                String updateQuery = "";
-                pst = con.prepareStatement(updateQuery);
+                String deleteQuery = "DELETE askquestion, post FROM askquestion INNER JOIN post ON askquestion.ranqueid=post.ranqueid WHERE askquestion.ranqueid='" + ranqueid + "';";
+                pst = con.prepareStatement(deleteQuery);
                 pst.executeUpdate();
                 f = true;
             } else {

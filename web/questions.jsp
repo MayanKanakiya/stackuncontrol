@@ -5,6 +5,7 @@
 --%>
 <%@page import="com.stackuncontrol.entities.askQuestion"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="com.stackuncontrol.entities.Message"%>
 <%@page import="com.stackuncontrol.helper.dbconnection.DBConnection"%>
 <%@page import="com.stackuncontrol.db.askQuestionDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -54,7 +55,23 @@
                 </div>
             </div>
             <hr>
+              <!--alert message code start here-->
+            <%
+                         Message msgObj = (Message) session.getAttribute("delQueMsg");
+                          if (msgObj != null) {
+                   %>
+                    <!--alert code start here-->
+                    <div class="alert <%= msgObj.getCls()%> alert-dismissible fade show" role="alert">
+                        <strong><i class="<%= msgObj.getSign()%> ms-0 me-2" aria-hidden="true"></i></strong> <%= msgObj.getContent()%>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <%
+                        session.removeAttribute("delQueMsg");
+                        }
+                    %>
+                    <!--alert code end here-->
         </div>
+        
         <%
             askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
             ArrayList<askQuestion> list1 =  dao.fetchQuestion();

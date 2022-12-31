@@ -31,8 +31,8 @@ public class askQuestionServlet extends HttpServlet {
             askQuestionDao dao = new askQuestionDao(conObj);
             askQuestion aQuestion = new askQuestion(title, replaceDetailsTxt, Integer.parseInt(uid.getId()),ranQueId);
 
-            Message msgObj;
-            HttpSession askQueMsgSes = req.getSession();
+                Message msgObj;
+                HttpSession askQueMsgSes = req.getSession();
 
             if (conObj != null) {
                 if (dao.askQuestion(aQuestion) == true) {

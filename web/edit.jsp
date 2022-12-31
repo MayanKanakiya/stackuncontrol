@@ -36,12 +36,12 @@
             </div>
         </div>
         <%
-            String editQue = request.getParameter("que");
-            String delQue = request.getParameter("delque");
-            String editPost = request.getParameter("post");
-            String delPost = request.getParameter("delpost");
-//            start if block when edit the question.
             if(user!=null){
+                String editQue = request.getParameter("que");
+                String delQue = request.getParameter("delque");
+                String editPost = request.getParameter("post");
+                String delPost = request.getParameter("delpost");
+//            start if block when edit the question.
             if(editQue!=null){
              askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
             ArrayList<askQuestion> list1 =  dao.fetchQuestion(editQue);
@@ -108,12 +108,14 @@
     }else if(editPost!=null){
         out.println(editPost);
     }else if(delQue!=null){
-        out.println(delQue);
+        request.setAttribute("deleteQue",delQue);
+        RequestDispatcher rd=request.getRequestDispatcher("deleteQAServlet"); 
+     rd.forward(request, response);  
     }else if(delPost!=null){
         out.println(delPost);
     }
     }else{
-        response.sendRedirect("discussion.jsp?que="+editQue);
+        response.sendRedirect("discussion.jsp");
     }
         %>
         <%@ include file="navbar_footer/footer.html" %>   

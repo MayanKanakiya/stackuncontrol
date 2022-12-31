@@ -63,6 +63,21 @@
             </div>
             <p>Asked <strong><%= aQuestion.getTime()  %></strong> | Like <strong>1</strong></p>
             <hr>
+              <!--alert message code start here-->
+            <%
+                         Message msgObj = (Message) session.getAttribute("delQueMsg");
+                          if (msgObj != null) {
+                   %>
+                    <!--alert code start here-->
+                    <div class="alert <%= msgObj.getCls()%> alert-dismissible fade show" role="alert">
+                        <strong><i class="<%= msgObj.getSign()%> ms-0 me-2" aria-hidden="true"></i></strong> <%= msgObj.getContent()%>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <%
+                        session.removeAttribute("delQueMsg");
+                        }
+                    %>
+                    <!--alert code end here-->
             <div class="d-flex">
                 <div class="flex-shrink-0">
                     <!--<i class="fa fa-thumbs-up me-1" aria-hidden="true" style="font-size:56px;cursor: pointer;"></i>-->

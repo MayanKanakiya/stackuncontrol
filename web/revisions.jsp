@@ -32,14 +32,22 @@
         <%
          String editQue = request.getParameter("que");
          askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
-            ArrayList<askQuestion> list1 =  dao.fetchRevisionsData(editQue);
+         ArrayList<askQuestion> list1 =  dao.fetchRevisionsData(editQue);
          if(user!=null){
            if(editQue!=null){
         %>
         <div class="container my-5">
             <!--part - 1 alert message start here-->
             <%
-                for(askQuestion aQuestion : list1){
+                if(list1.isEmpty()){
+            %>
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading my-3">No one has changed the question.</h4>
+                <p>If you this question need some correction then re-edit the question. We welcome edits that make the post easier to understand and more valuable for readers. Because community members review edits, please try to make the post substantially better than how you found it, for example, by fixing grammar or adding additional resources and hyperlinks.</p>
+            </div>
+            <%
+            }else{
+            for(askQuestion aQuestion : list1){
             %>
             <div class="alert alert-primary" role="alert">
                 <div class="d-flex mb-3 align-items-center">
@@ -57,6 +65,7 @@
             <hr>
             <!--part - 2 correction end  here-->
             <%
+                }
                 }
             %>
         </div>
