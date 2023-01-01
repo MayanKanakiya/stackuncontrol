@@ -61,6 +61,7 @@ public class askQuestionDao {
     }
 //    Method for fetch question into questions.jsp page - end here
 //    Method for fetch post - start here
+
     public ArrayList<PostAns> fetchPost(String postranid) {
         ArrayList<PostAns> list = new ArrayList<>();
         try {
@@ -248,11 +249,11 @@ public class askQuestionDao {
 //    Method for update post page - end here
 //    Method for delete post page - end here
 
-    public boolean DeletePost(PostAns pans, String ranpostid) {
+    public boolean DeletePost(String ranpostid) {
         boolean f = false;
         try {
             if (con != null) {
-                String updateQuery = "";
+                String updateQuery = "DELETE FROM `post` WHERE ranpostid='" + ranpostid + "';";
                 pst = con.prepareStatement(updateQuery);
                 pst.executeUpdate();
                 f = true;
@@ -282,13 +283,13 @@ public class askQuestionDao {
         return f;
     }
     //Method for who edit the question in database - end here
-    
+
     //Method for who edit the post for particular question in database - start here
-        public boolean revisionsPost(PostAns pans) {
+    public boolean revisionsPost(PostAns pans) {
         boolean f = false;
         try {
             if (con != null) {
-                String insertQuery = "insert into revisions(editqadetails,editqauname,ranqueid) values('" + pans.getPostDetail()+ "','" + pans.getPostuname() + "','" + pans.getRanQueid() + "')";
+                String insertQuery = "insert into revisions(editqadetails,editqauname,ranqueid) values('" + pans.getPostDetail() + "','" + pans.getPostuname() + "','" + pans.getRanQueid() + "')";
                 pst = con.prepareStatement(insertQuery);
                 pst.executeUpdate();
                 f = true;
@@ -299,9 +300,8 @@ public class askQuestionDao {
         return f;
     }
     //Method for who edit the post for particular question in database - end here
-    
-    //    Method for fetch question into questions.jsp page - start here
 
+    //    Method for fetch revisions for question - start here
     public ArrayList<askQuestion> fetchRevisionsData(String queranid) {
         ArrayList<askQuestion> list = new ArrayList<>();
         try {
@@ -318,9 +318,32 @@ public class askQuestionDao {
                 list.add(aQuestion);
             }
         } catch (Exception e) {
-            System.err.println(e + " Error while fetch question into question.jsp page ");
+            System.err.println(e + " Error while fetch revisions data");
         }
         return list;
     }
-//    Method for fetch question into questions.jsp page - end here
+//    Method for fetch revisions for question- end here
+    //    Method for fetch revisions for post - start here
+
+    public ArrayList<PostAns> fetchRevisionsData2(String postranid) {
+        ArrayList<PostAns> list = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT * from revisions where ranqueid='" + postranid + "';";
+            pst = con.prepareStatement(selectQuery);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                int queid = rs.getInt("id");
+                String detailsQue = rs.getString("editqadetails");
+                String uname = rs.getString("editqauname");
+                String ranqueid = rs.getString("ranqueid");
+                String time = rs.getString("time");
+                PostAns pans = new PostAns(queid, detailsQue, uname, ranqueid, time);
+                list.add(pans);
+            }
+        } catch (Exception e) {
+            System.err.println(e + " Error while fetch revisions data");
+        }
+        return list;
+    }
+//    Method for fetch revisions for post- end here
 }

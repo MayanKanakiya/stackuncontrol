@@ -164,9 +164,11 @@
     }else if(delQue!=null){
         request.setAttribute("deleteQue",delQue);
         RequestDispatcher rd=request.getRequestDispatcher("deleteQAServlet"); 
-     rd.forward(request, response);  
+        rd.forward(request, response);  
     }else if(delPost!=null){
-        out.println(delPost);
+       request.setAttribute("deletePost",delPost);
+        RequestDispatcher rd=request.getRequestDispatcher("deletePostServelt"); 
+        rd.forward(request, response);  
     }
     }else{
         response.sendRedirect("discussion.jsp?que="+ranQuetId);

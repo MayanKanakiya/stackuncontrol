@@ -20,6 +20,13 @@ public class PostAns {
         this.ranPostid = ranPostid;
         this.time = time;
     }
+    public PostAns(int postid, String postDetail, String postuname, String ranQueid, String time) {
+        this.postid = postid;
+        this.postDetail = postDetail;
+        this.postuname = postuname;
+        this.ranQueid = ranQueid;
+        this.time = time;
+    }
 
     public PostAns(String postDetail, String postuname, String ranQueid, String ranPostid) {
         this.postDetail = postDetail;

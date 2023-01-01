@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="com.stackuncontrol.entities.askQuestion"%>
+<%@page import="com.stackuncontrol.entities.PostAns"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.stackuncontrol.helper.dbconnection.DBConnection"%>
 <%@page import="com.stackuncontrol.db.askQuestionDao"%>
@@ -30,11 +31,14 @@
         <%@ include file="navbar_footer/navbar.jsp" %>
         <!--main section start here-->
         <%
+            ServletContext sc = getServletContext();
+                String ranQuetId = (String) sc.getAttribute("ranQueid");
          String editQue = request.getParameter("que");
+         String editPost = request.getParameter("post");
          askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
-         ArrayList<askQuestion> list1 =  dao.fetchRevisionsData(editQue);
          if(user!=null){
            if(editQue!=null){
+         ArrayList<askQuestion> list1 =  dao.fetchRevisionsData(editQue);
         %>
         <div class="container my-5">
             <!--part - 1 alert message start here-->
@@ -43,7 +47,7 @@
             %>
             <div class="alert alert-danger" role="alert">
                 <h4 class="alert-heading my-3">No one has changed the question.</h4>
-                <p>If you this question need some correction then re-edit the question. We welcome edits that make the post easier to understand and more valuable for readers. Because community members review edits, please try to make the post substantially better than how you found it, for example, by fixing grammar or adding additional resources and hyperlinks.</p>
+                <p>If you need some correction on this question then re-edit the question. We welcome edits that make the post easier to understand and more valuable for readers. Because community members review edits, please try to make the post substantially better than how you found it, for example, by fixing grammar or adding additional resources and hyperlinks.</p>
             </div>
             <%
             }else{
@@ -70,7 +74,44 @@
             %>
         </div>
         <%
-       }else{
+       }else if(editPost!=null){
+            ArrayList<PostAns> list1 =  dao.fetchRevisionsData2(editPost);
+        %>
+        <div class="container my-5">
+            <!--part - 1 alert message start here-->
+            <%
+                if(list1.isEmpty()){
+            %>
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading my-3">No one has changed the post.</h4>
+                <p>If you need some correction on this post then re-edit the post. We welcome edits that make the post easier to understand and more valuable for readers. Because community members review edits, please try to make the post substantially better than how you found it, for example, by fixing grammar or adding additional resources and hyperlinks.</p>
+            </div>
+            <%
+            }else{
+            for(PostAns pans : list1){
+            %>
+            <div class="alert alert-primary" role="alert">
+                <div class="d-flex mb-3 align-items-center">
+                    <div class="p-2">Added some correction in body.</div>
+                    <div class="ms-auto p-2">
+                        <img src="mediaFiles/user.png" alt="person image not found" width="32" height="32" class="rounded-circle me-2">  <%=pans.getPostuname()  %><p class="my-1">Asked <strong><%=pans.getTime()  %></strong> | Like <strong>1</strong></p>
+                    </div>
+                </div>
+            </div>
+            <!--part - 1 alert message end  here-->
+            <!--part - 2 correction start here-->
+            <div class="RevisionsCodePalette">
+                <%= pans.getPostDetail()%>
+            </div>
+            <hr>
+            <!--part - 2 correction end  here-->
+            <%
+                }
+                }
+            %>
+        </div>
+        <%
+    }else{
         %>
         <div class="alert alert-danger" role="alert">
             <h4 class="alert-heading my-4">Someting went wrong!</h4>
@@ -78,6 +119,9 @@
         </div>
         <%
         }
+        }else{
+        response.sendRedirect("discussion.jsp?que="+ranQuetId);
+        sc.removeAttribute(ranQuetId);
         }
         %>
         <!--main section end here-->
