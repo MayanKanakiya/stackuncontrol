@@ -21,7 +21,7 @@ public class editQAServlet extends HttpServlet {
         res.setContentType("text/html;charset=UTF-8");
         String editTitle = req.getParameter("editTitle");
         ServletContext sc = getServletContext();
-        String ranqueid = (String) sc.getAttribute("ranqueid");
+        String ranqueid = (String) sc.getAttribute("ranQueid");
         String editQuestionDetails = req.getParameter("editQuestionDetails");
 
         Connection conObj = DBConnection.isConnection();
@@ -43,13 +43,13 @@ public class editQAServlet extends HttpServlet {
         try {
             if (conObj != null) {
                 if (dao.revisionsQue(aQuestion1) != true) {
-                    System.out.println("Error while insert revisions data into table(inside if block)");
+                    System.out.println("Error while insert edited questions revisions data into table(inside if block)");
                 }
             } else {
                 System.out.println("Connection Error.");
             }
         } catch (Exception e) {
-            System.out.println(e + " Error while insert revisions data into table(inside catch block) ");
+            System.out.println(e + " Error while insert edited questions revisions data into table(inside catch block) ");
         }
 //        insert revisions question and answer - end here
 

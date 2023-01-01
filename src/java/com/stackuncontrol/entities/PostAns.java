@@ -28,6 +28,17 @@ public class PostAns {
         this.ranPostid = ranPostid;
     }
 
+    public PostAns(String postDetail) {
+        this.postDetail = postDetail;
+    }
+
+    public PostAns(String postDetail, String postuname, String ranQueid) {
+        this.postDetail = postDetail;
+        this.postuname = postuname;
+        this.ranQueid = ranQueid;
+    }
+    
+
     public String getRanPostid() {
         return ranPostid;
     }

@@ -58,8 +58,31 @@ public class askQuestionDao {
             System.err.println(e + " Error while fetch question into question.jsp page ");
         }
         return list;
-//    Method for fetch question into questions.jsp page - end here
     }
+//    Method for fetch question into questions.jsp page - end here
+//    Method for fetch post - start here
+    public ArrayList<PostAns> fetchPost(String postranid) {
+        ArrayList<PostAns> list = new ArrayList<>();
+        try {
+            String selectQuery = "select * from post;";
+            pst = con.prepareStatement(selectQuery);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                int postid = rs.getInt("postid");
+                String postDetails = rs.getString("postDetail");
+                String postuname = rs.getString("postuname");
+                String ranqueid = rs.getString("ranqueid");
+                String ranpostid = rs.getString("ranpostid");
+                String time = rs.getString("time");
+                PostAns pans = new PostAns(postid, postDetails, postuname, ranqueid, ranpostid, time);
+                list.add(pans);
+            }
+        } catch (Exception e) {
+            System.err.println(e + " Error while fetching post");
+        }
+        return list;
+    }
+//    Method for fetch post - end here
 //    Method for discussion question into other page - start here
 
     public ArrayList<askQuestion> discussion(String ranqueid) {
@@ -242,7 +265,7 @@ public class askQuestionDao {
         return f;
     }
 //    Method for delete post page - end here
-    //Method for insert askQuestion inF database - start here
+    //Method for who edit the question in database - start here
 
     public boolean revisionsQue(askQuestion aQuestion) {
         boolean f = false;
@@ -258,7 +281,25 @@ public class askQuestionDao {
         }
         return f;
     }
-    //Method for insert askQuestion in database - end here
+    //Method for who edit the question in database - end here
+    
+    //Method for who edit the post for particular question in database - start here
+        public boolean revisionsPost(PostAns pans) {
+        boolean f = false;
+        try {
+            if (con != null) {
+                String insertQuery = "insert into revisions(editqadetails,editqauname,ranqueid) values('" + pans.getPostDetail()+ "','" + pans.getPostuname() + "','" + pans.getRanQueid() + "')";
+                pst = con.prepareStatement(insertQuery);
+                pst.executeUpdate();
+                f = true;
+            }
+        } catch (Exception e) {
+            System.err.println(e + " Error while insert revisions post into table ");
+        }
+        return f;
+    }
+    //Method for who edit the post for particular question in database - end here
+    
     //    Method for fetch question into questions.jsp page - start here
 
     public ArrayList<askQuestion> fetchRevisionsData(String queranid) {

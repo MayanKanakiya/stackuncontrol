@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="com.stackuncontrol.entities.askQuestion"%>
 <%@page import="com.stackuncontrol.entities.Message"%>
+<%@page import="com.stackuncontrol.entities.PostAns"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.stackuncontrol.helper.dbconnection.DBConnection"%>
 <%@page import="com.stackuncontrol.db.askQuestionDao"%>
@@ -36,22 +37,20 @@
             </div>
         </div>
         <%
-            if(user!=null){
+                ServletContext sc = getServletContext();
+                String ranQuetId = (String) sc.getAttribute("ranQueid");
                 String editQue = request.getParameter("que");
                 String delQue = request.getParameter("delque");
                 String editPost = request.getParameter("post");
                 String delPost = request.getParameter("delpost");
+            if(user!=null){
+             askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
 //            start if block when edit the question.
             if(editQue!=null){
-             askQuestionDao dao = new askQuestionDao(DBConnection.isConnection());
             ArrayList<askQuestion> list1 =  dao.fetchQuestion(editQue);
         %>
         <div class="container">
             <form id="editQAMainForm" action="editQAServlet" method="POST">
-                <%
-                ServletContext sc = getServletContext();
-                sc.setAttribute("ranqueid", editQue);
-                %>
                 <%
                    if(list1.isEmpty()){
                 %>
@@ -82,7 +81,6 @@
                 <label class="form-text my-0">Edit title. Minimum 20 characters.</label>
                 <input type="text" class="form-control mb-3" id="title" name="editTitle" value="<%=aQuestion.getTitle() %>" placeholder="Enter title here">
                 <!--Ask question : ask question container start-->
-                <!--Ask question : ask question container start-->
                 <label class="form-text my-0">Edit Details. Minimum 20 characters.</label>
                 <div id="editor-example-1" class="mb-3"></div>
                 <div id="preview1" class="d-none"></div>
@@ -97,6 +95,7 @@
                         document.getElementById('editor1').innerHTML = `<%= replaceDetailsTxt %>`;
                     });
                 </script>
+                <script></script>
                 <button type="submit" onclick="parseHTML()" id="editAnsBtn" disabled="disabled" class="btn btn-primary mb-4">Edit</button>
                 <%
                     }
@@ -106,7 +105,62 @@
         </div>
         <%
     }else if(editPost!=null){
-        out.println(editPost);
+        ArrayList<PostAns> list1 =  dao.fetchPost(editPost);
+        %>
+        <div class="container">
+            <form id="editPostMainForm" action="editPostServlet" method="POST">
+                <%
+                ServletContext sc1 = getServletContext();
+                sc1.setAttribute("ranPostId", editPost);
+                   if(list1.isEmpty()){
+                %>
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading my-4">Someting went wrong!</h4>
+                    <p class="mb-4"><i class="fa fa-exclamation-triangle me-1" aria-hidden="true"></i>This post is not available.</p>
+                </div>
+                <%
+                    }else{
+                      for(PostAns pans : list1){
+                %>
+                <!--Ask question : ask question container start-->
+                <!--alert message code start here-->
+                <%
+                             Message msgObj = (Message) session.getAttribute("editPostMsg");
+                              if (msgObj != null) {
+                %>
+                <!--alert code start here-->
+                <div class="alert <%= msgObj.getCls()%> alert-dismissible fade show" role="alert">
+                    <strong><i class="<%= msgObj.getSign()%> ms-0 me-2" aria-hidden="true"></i></strong> <%= msgObj.getContent()%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <%
+                    session.removeAttribute("editPostMsg");
+                    }
+                %>
+                <!--alert code end here-->
+                <!--Ask question : ask question container start-->
+                <label class="form-text my-0">Edit Details. Minimum 20 characters.</label>
+                <div id="editor-example-1" class="mb-3"></div>
+                <div id="preview1" class="d-none"></div>
+                <input type="hidden" class="form-control mb-3 text-dark" name="editPostDetails" id="txt1">
+                <!--Ask question : ask question container end-->                
+                <script>
+                    <%
+                        String editDetails = pans.getPostDetail();
+                        String replaceDetailsTxt = editDetails.replace("\"", "\\\"").replace("Edit", " ").replace("plaintext", " ");
+                    %>
+                    $(document).ready(() => {
+                        document.getElementById('editor1').innerHTML = `<%= replaceDetailsTxt %>`;
+                    });
+                </script>
+                <button type="submit" onclick="parseHTML()" id="editPostBtn" disabled="disabled" class="btn btn-primary mb-4">Edit</button>
+                <%
+                    }
+                    }
+                %>
+            </form>
+        </div>
+        <%
     }else if(delQue!=null){
         request.setAttribute("deleteQue",delQue);
         RequestDispatcher rd=request.getRequestDispatcher("deleteQAServlet"); 
@@ -115,7 +169,7 @@
         out.println(delPost);
     }
     }else{
-        response.sendRedirect("discussion.jsp");
+        response.sendRedirect("discussion.jsp?que="+ranQuetId);
     }
         %>
         <%@ include file="navbar_footer/footer.html" %>   
@@ -123,6 +177,17 @@
         <script src="js/bootJs.js" defer type="text/javascript"></script>
         <script src="node_modules/@stackoverflow/stacks-editor/dist/app.bundle.js"></script>
         <script src="js/stacks.min.js" type="text/javascript"></script>
-        <script src="js/editqa.js" type="text/javascript"></script>
+        <%
+        if(editQue!=null){
+        %>
+        <script src="js/editqa.js" type="text/javascript"></script>        
+        <%
+            }else{
+        %>
+        %>
+        <script src="js/editPost.js" type="text/javascript"></script>            
+        <%
+        }
+        %>
     </body>
 </html>

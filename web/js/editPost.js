@@ -8,9 +8,8 @@ let editorText = document.getElementsByClassName('ProseMirror')[0];
 editorText.id = "stackEditor";
 let stackEditor = document.getElementById('stackEditor');
 
-let mainFormQA = document.getElementById("editQAMainForm");
-let btnQA = document.getElementById("editAnsBtn");
-let title = document.getElementById("title");
+let mainFormPost = document.getElementById("editPostMainForm");
+let btnPost = document.getElementById("editPostBtn");
 let txt1Container = document.getElementById("editor-example-1");
 
 //set id for button disable when all 3 textboxs are empty - start here
@@ -19,11 +18,11 @@ let txt1 = document.getElementById('editor1');
 //set id for button disable when all 3 textboxs are empty - end here
 
 //function for disable button when textboxs are empty - start code here
-mainFormQA.addEventListener('input', () => {
-    if (title.value.length >= 20 && txt1.innerText.length >= 20) {
-        btnQA.removeAttribute('disabled');
+mainFormPost.addEventListener('input', () => {
+    if (txt1.innerText.length >= 20) {
+        btnPost.removeAttribute('disabled');
     } else {
-        btnQA.setAttribute('disabled', 'disabled');
+        btnPost.setAttribute('disabled', 'disabled');
     }
 });
 //function for disable button when textboxs are empty - end code here
